@@ -23,18 +23,20 @@ float* setMatrix(uint8 x, uint8 y,float* a,float * c) {
     return c;
 }
 float* transMatrix(uint8 x, uint8 y,float* a,float * c) {
-    for(int ii=0;ii<x;++ii) {
-        for(int jj=0;jj<y;++jj) {
+    for(int ii=0;ii<y;++ii) {
+        for(int jj=0;jj<x;++jj) {
             c[ii*x+jj] = a[jj*y+ii];
         }
     }
     return c;
 }
+
 void swap(float* a, float* b) {
     float swap = *a;
     *a = *b;
     *b = swap;
 }
+
 
 float detMatrix(uint8 x, uint8 y, float* a) {
     if(x!=y) return 0;
