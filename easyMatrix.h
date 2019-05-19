@@ -22,6 +22,14 @@ float* setMatrix(uint8 x, uint8 y,float* a,float * c) {
     }
     return c;
 }
+
+float* copyMatrix(uint8 x, uint8 y,float* a,float * c) {
+    int t = x*y;
+    for(int i=0;i<t;++i) {
+        c[i] = a[i];
+    }
+    return c;
+}
 float* transMatrix(uint8 x, uint8 y,float* a,float * c) {
     for(int ii=0;ii<y;++ii) {
         for(int jj=0;jj<x;++jj) {
