@@ -8,6 +8,7 @@
 #ifndef _MAGRIDE_PLANNING_EASYMATRIX_H_
 #define _MAGRIDE_PLANNING_EASYMATRIX_H_
 
+#include <stdlib.h>
 typedef unsigned char uint8;
 
 #define declearMatrix(x,y) \
@@ -38,6 +39,8 @@ float* transMatrix(uint8 x, uint8 y,float* a,float * c) {
     }
     return c;
 }
+
+
 
 void swap(float* a, float* b) {
     float swap = *a;
@@ -151,5 +154,25 @@ void dumpMatrix(uint8 x, uint8 y, float*e) {
         printf("\n");
     }
     return;
+}
+
+float* adjMatrix(uint8 x, uint8 y,float* a,float * c) {
+    float* adj =(float*) malloc(sizeof(float)*(x-1)*(y-1));
+    int index = 0;
+    for(int ii=0;ii<x;++ii) {
+        for(int jj=0;jj<y;++jj) {
+            index = 0;
+            for(int kk=0;kk<x;++kk) {
+                for(int ww=0;ww<y;++ww) {
+                    if(kk!=ii&&ww!=jj)
+                        adj[index] = a[kk*y+ww];
+                        printf("adj:%f\n",adj[index]);
+                        index++;
+                }
+            }
+            c[ii*y+jj] = detMatrix((x-1),(y-1),adj);
+        }
+    }
+    return c;
 }
 #endif//_MAGRIDE_PLANNING_EASYMATRIX_H_
