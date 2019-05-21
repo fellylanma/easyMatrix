@@ -164,13 +164,16 @@ float* adjMatrix(uint8 x, uint8 y,float* a,float * c) {
             index = 0;
             for(int kk=0;kk<x;++kk) {
                 for(int ww=0;ww<y;++ww) {
-                    if(kk!=ii&&ww!=jj)
+                    if(!(kk==ii||ww==jj)) {
                         adj[index] = a[kk*y+ww];
-                        printf("adj:%f\n",adj[index]);
                         index++;
+                    }
                 }
             }
-            c[ii*y+jj] = detMatrix((x-1),(y-1),adj);
+            dumpMatrix(2,2,adj);
+            printf("x,y:%d,%d",x,y);
+            c[ii*y+jj] = detMatrix(2,2,adj);
+            printf("adj det is:%d\n",c[ii*y+jj]);
         }
     }
     return c;
