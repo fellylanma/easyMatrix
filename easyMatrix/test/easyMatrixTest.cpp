@@ -6,17 +6,20 @@
  ************************************************************************/
 
 #include<stdio.h>
-extern C {
+extern "C" {
 #include "easyMatrix.h"
 }
 #include "gtest/gtest.h"
+/*
 declearMatrix(3,3);
 declearMatrix(2,3);
 declearMatrix(3,2);
 declearMatrix(2,2);
+*/
 TEST(testCase, easyMatrixTest0) {
 
-}
+};
+
 /*
 int main() {
     struct easyMatrix3N3 a;
@@ -83,4 +86,4 @@ int main() {
 
     return 0;
     */
-}
+//}
