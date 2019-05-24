@@ -10,14 +10,51 @@ extern "C" {
 #include "easyMatrix.h"
 }
 #include "gtest/gtest.h"
-/*
+
 declearMatrix(3,3);
 declearMatrix(2,3);
 declearMatrix(3,2);
 declearMatrix(2,2);
-*/
-TEST(testCase, easyMatrixTest0) {
+//TODO
+//TEST_F
+void expect(int i, int j,float* a, float* b) {
+    int t = i*j;
+    for(int ii=0;ii<t;++ii) {
+        EXPECT_NEAR(a[ii],b[ii],1e-6);
+    }
+}
 
+void expect(int i, int j,float* a, float val) {
+    int t = i*j;
+    for(int ii=0;ii<t;++ii) {
+        EXPECT_NEAR(a[ii],val,1e-6);
+    }
+}
+TEST(testCase, easyMatrixTest_SET) {
+    easyMatrix3N3 M0;
+    {
+        float val[] = {1,2,3,4,5,6,7,8,9};
+        setMatrix(3,3,val,M0.element);
+        expect(3,3,val,M0.element);
+    }
+};
+
+TEST(testCase, easyMatrixTest_ZEROS) {
+    easyMatrix3N3 M0;
+    float val[] = {1,2,3,4,5,6,7,8,9};
+    setMatrix(3,3,val,M0.element);
+    expect(3,3,val,M0.element);
+    zerosMatrix(3,3,M0.element);
+    expect(3,3,M0.element,0.0f);
+};
+TEST(testCase, easyMatrixTest_ONES) {
+    easyMatrix3N3 M0;
+    float val[] = {1,2,3,4,5,6,7,8,9};
+    setMatrix(3,3,val,M0.element);
+    expect(3,3,val,M0.element);
+
+    eyesMatrix(3,3,M0.element);
+    expect(3,3,M0.element,1.0f);
 };
 
 /*
