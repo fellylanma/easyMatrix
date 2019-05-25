@@ -15,8 +15,8 @@ declearMatrix(3,3);
 declearMatrix(2,3);
 declearMatrix(3,2);
 declearMatrix(2,2);
-//TODO
-//TEST_F
+
+float val[] = {1,2,3,4,5,6,7,8,9};
 void expect(int i, int j,float* a, float* b) {
     int t = i*j;
     for(int ii=0;ii<t;++ii) {
@@ -33,7 +33,6 @@ void expect(int i, int j,float* a, float val) {
 TEST(testCase, easyMatrixTest_SET) {
     easyMatrix3N3 M0;
     {
-        float val[] = {1,2,3,4,5,6,7,8,9};
         setMatrix(3,3,val,M0.element);
         expect(3,3,val,M0.element);
     }
@@ -41,7 +40,6 @@ TEST(testCase, easyMatrixTest_SET) {
 
 TEST(testCase, easyMatrixTest_ZEROS) {
     easyMatrix3N3 M0;
-    float val[] = {1,2,3,4,5,6,7,8,9};
     setMatrix(3,3,val,M0.element);
     expect(3,3,val,M0.element);
     zerosMatrix(3,3,M0.element);
@@ -49,13 +47,51 @@ TEST(testCase, easyMatrixTest_ZEROS) {
 };
 TEST(testCase, easyMatrixTest_ONES) {
     easyMatrix3N3 M0;
-    float val[] = {1,2,3,4,5,6,7,8,9};
     setMatrix(3,3,val,M0.element);
     expect(3,3,val,M0.element);
 
     eyesMatrix(3,3,M0.element);
     expect(3,3,M0.element,1.0f);
 };
+TEST(testCase, easyMatrixTest_TRANS0) {
+    easyMatrix3N3 M0,M1;
+    setMatrix(3,3,val,M0.element);
+    transMatrix(3,3,M0.element,M1.element);
+    float val1[] = {1,4,7,2,5,8,3,6,9};
+    expect(3,3,M1.element,val1);
+}
+TEST(testCase, easyMatrixTest_TRANS1) {
+    easyMatrix2N3 N1;
+    easyMatrix3N2 N2;
+    setMatrix(2,3,val,N1.element);
+    transMatrix(2,3,N1.element,N2.element);
+    float val1[] = {1,4,2,5,3,6};
+    expect(3,2,N2.element,val1);
+}
+
+TEST(testCase, easyMatrixTest_DET) {
+    easyMatrix3N3 M0;
+    setMatrix(3,3,val,M0.element);
+    float result = detMatrix(3,3,M0.element);
+    EXPECT_EQ(result,0);
+}
+
+TEST(testCase, easyMatrixTest_DET1) {
+    easyMatrix3N3 M0;
+    float val1[] = {1,3,4,5,6,7,2,3,5};
+    setMatrix(3,3,val1,M0.element);
+    float result = detMatrix(3,3,M0.element);
+    EXPECT_EQ(result,-12);
+}
+
+TEST(testCase, easyMatrixTest_DET2) {
+    easyMatrix2N2 M0;
+    float val1[] = {1,3,4,5};
+    setMatrix(2,2,val1,M0.element);
+    dumpMatrix(2,2,M0.element);
+    float result = detMatrix(2,2,M0.element);
+    EXPECT_EQ(result,-7);
+}
 
 /*
 int main() {

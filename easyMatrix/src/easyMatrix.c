@@ -45,6 +45,7 @@ float detMatrix(uint8 x, uint8 y, float* a) {
     float val = 1.0;
     float result = 0;
     uint8 t = 0;
+    if(x==2) return(a[0]*a[3]-a[1]*a[2]);
     for(uint8 seed = 0;seed<x;++seed) {
         val = 1.0;
         t = 0;
