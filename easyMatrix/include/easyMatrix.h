@@ -13,6 +13,7 @@ typedef unsigned char uint8;
 
 #define declearMatrix(x,y) \
 struct easyMatrix##x##N##y {\
+    uint8 rows,cols;\
     float element[x*y];\
 }\
 
