@@ -15,6 +15,9 @@ declearMatrix(3,3);
 declearMatrix(2,3);
 declearMatrix(3,2);
 declearMatrix(2,2);
+declearMatrix(4,4);
+declearMatrix(1,4);
+declearMatrix(4,1);
 
 float val[] = {1,2,3,4,5,6,7,8,9};
 void expect(int i, int j,float* a, float* b) {
@@ -88,9 +91,68 @@ TEST(testCase, easyMatrixTest_DET2) {
     easyMatrix2N2 M0;
     float val1[] = {1,3,4,5};
     setMatrix(2,2,val1,M0.element);
-    dumpMatrix(2,2,M0.element);
     float result = detMatrix(2,2,M0.element);
     EXPECT_EQ(result,-7);
+}
+
+TEST(testCase, easyMatrixTest_DET3) {
+    easyMatrix4N4 M0;
+    float val1[] = {1,2,3,4,
+                    1,1,2,3,
+                    1,1,1,2,
+                    1,1,1,1};
+    setMatrix(2,2,val1,M0.element);
+    float result = detMatrix(4,4,M0.element);
+    EXPECT_EQ(result,1);
+}
+
+TEST(testCase, easyMatrixTest_ADD0) {
+    easyMatrix4N4 M0;
+    easyMatrix4N4 M1;
+    float val1[] = {1,3,4,5,3,2,5,6,1,2,3,4,1,2,3,4};
+    float val2[] = {1,3,4,5,3,2,5,6,1,2,3,4,1,2,3,4};
+    for(int i=0;i<16;++i) val2[i] = val1[i] +1;
+    setMatrix(4,4,val1,M0.element);
+    eyesMatrix(4,4,M1.element);
+    addMatrix(4,4,M1.element,M0.element,M1.element);
+
+    expect(4,4,M1.element,val2);
+}
+
+TEST(testCase, easyMatrixTest_SUB0) {
+    easyMatrix4N4 M0;
+    easyMatrix4N4 M1;
+    float val1[] = {1,3,4,5,3,2,5,6,1,2,3,4,1,2,3,4};
+    float val2[] = {1,3,4,5,3,2,5,6,1,2,3,4,1,2,3,4};
+    for(int i=0;i<16;++i) val2[i] = val1[i] -1;
+    setMatrix(4,4,val1,M0.element);
+    eyesMatrix(4,4,M1.element);
+    subMatrix(4,4,M0.element,M1.element,M1.element);
+
+    expect(4,4,M1.element,val2);
+}
+
+TEST(testCase, easyMatrixTest_MUL0) {
+    easyMatrix1N4 M0;
+    easyMatrix4N1 M1;
+    float val1[] = {1,2,3,4};
+    setMatrix(1,4,val1,M0.element);
+    setMatrix(4,1,val1,M1.element);
+    float result;
+    multiMatrix(1,4,M0.element,1,M1.element,&result);
+
+    EXPECT_EQ(result,30);
+}
+TEST(testCase, easyMatrixTest_MUL1) {
+    easyMatrix1N4 M0;
+    easyMatrix4N1 M1;
+    easyMatrix4N4 M2;
+    float val1[] = {1,2,3,4};
+    float val2[] = {1,2,3,4,2,4,6,8,3,6,9,12,4,8,12,16};
+    setMatrix(1,4,val1,M0.element);
+    setMatrix(4,1,val1,M1.element);
+    multiMatrix(4,1,M1.element,4,M0.element,M2.element);
+    expect(4,4,M2.element,val2);
 }
 
 /*
