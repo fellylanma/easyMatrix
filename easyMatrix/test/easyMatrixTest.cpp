@@ -98,11 +98,21 @@ TEST(testCase, easyMatrixTest_DET2) {
 TEST(testCase, easyMatrixTest_DET3) {
     easyMatrix4N4 M0;
     float val1[] = {1,2,3,4,
-                    1,1,2,3,
-                    1,1,1,2,
-                    1,1,1,1};
-    setMatrix(2,2,val1,M0.element);
+                    0,1,2,3,
+                    0,0,1,2,
+                    0,0,0,1};
+    setMatrix(4,4,val1,M0.element);
     float result = detMatrix(4,4,M0.element);
+    EXPECT_EQ(result,1);
+}
+
+TEST(testCase, easyMatrixTest_DET4) {
+    easyMatrix3N3 M0;
+    float val1[] = {1,2,3,
+                    0,1,2,
+                    0,0,1};
+    setMatrix(3,3,val1,M0.element);
+    float result = detMatrix(3,3,M0.element);
     EXPECT_EQ(result,1);
 }
 
