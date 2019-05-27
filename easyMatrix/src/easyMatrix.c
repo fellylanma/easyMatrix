@@ -42,10 +42,14 @@ void swap(float* a, float* b) {
 
 float detMatrix(uint8 x, uint8 y, float* a) {
     if(x!=y) return 0;
+    dumpMatrix(x,y,a);
     float val = 1.0;
     float result = 0;
     uint8 t = 0;
     if(x==2) return(a[0]*a[3]-a[1]*a[2]);
+    if(x==3) return(a[0]*a[4]*a[8]+a[1]*a[5]*a[6]+a[2]*a[3]*a[7]-a[2]*a[4]*a[6]-a[1]*a[3]*a[8]-a[0]*a[5]*a[7]);
+    return 0;
+    /*
     for(uint8 seed = 0;seed<x;++seed) {
         val = 1.0;
         t = 0;
@@ -55,6 +59,7 @@ float detMatrix(uint8 x, uint8 y, float* a) {
             t+=y;
             if(val==0) break;
         }
+        printf("numis:%f\n",val);
         result += val;
     }
     uint8 MAX = 0-1;
@@ -67,9 +72,12 @@ float detMatrix(uint8 x, uint8 y, float* a) {
             t+=y;
             if(val==0) break;
         }
+        printf("numis:%f\n",val);
         result -= val;
     }
+    
     return result;
+    */
 }
 
 float* addMatrix(uint8 x, uint8 y,float* a, float * b, float * c) {
