@@ -38,17 +38,33 @@ void swap(float* a, float* b) {
     *a = *b;
     *b = swap;
 }
-
+float* leftMatrix(uint8 x, uint8 y,uint8 x_i,uint8 y_i, float* in, float* out) {
+    int index = 0;
+    for(int kk=0;kk<x;++kk) {
+        for(int ww=0;ww<y;++ww) {
+            if(!(kk==x_i||ww==y_i)) {
+                out[index] = in[kk*y+ww];
+                index++;
+            }
+        }
+    }
+    return out;
+}
 
 float detMatrix(uint8 x, uint8 y, float* a) {
     if(x!=y) return 0;
-    dumpMatrix(x,y,a);
-    float val = 1.0;
-    float result = 0;
-    uint8 t = 0;
+    //dumpMatrix(x,y,a);
     if(x==2) return(a[0]*a[3]-a[1]*a[2]);
     if(x==3) return(a[0]*a[4]*a[8]+a[1]*a[5]*a[6]+a[2]*a[3]*a[7]-a[2]*a[4]*a[6]-a[1]*a[3]*a[8]-a[0]*a[5]*a[7]);
-    return 0;
+    float result = 0;
+    signed char sign = 1;
+    float* ret =(float*) malloc(sizeof(float)*(x-1)*(y-1));
+    for(uint8 i=0;i<x;++i) {
+        leftMatrix(x,y,0,i,a,ret);
+        result += sign*a[0+i]*detMatrix(x-1,y-1,ret);
+        sign = - sign;
+    }
+    return result;
     /*
     for(uint8 seed = 0;seed<x;++seed) {
         val = 1.0;

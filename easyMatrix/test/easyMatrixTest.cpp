@@ -116,6 +116,17 @@ TEST(testCase, easyMatrixTest_DET4) {
     EXPECT_EQ(result,1);
 }
 
+TEST(testCase, easyMatrixTest_DET5) {
+    easyMatrix4N4 M0;
+    float val1[] = {1,5,3,5,
+                    5,6,8,1,
+                    9,8,3,1,
+                    4,3,2,7 };
+    setMatrix(4,4,val1,M0.element);
+    float result = detMatrix(4,4,M0.element);
+    EXPECT_EQ(result,1475);
+}
+
 TEST(testCase, easyMatrixTest_ADD0) {
     easyMatrix4N4 M0;
     easyMatrix4N4 M1;
@@ -163,6 +174,17 @@ TEST(testCase, easyMatrixTest_MUL1) {
     setMatrix(4,1,val1,M1.element);
     multiMatrix(4,1,M1.element,4,M0.element,M2.element);
     expect(4,4,M2.element,val2);
+}
+
+TEST(testCase, easyMatrixTest_LEFT) {
+    easyMatrix3N3 M0;
+    easyMatrix2N2 M1;
+    float val1[] = {1,2,3,4,2,4,6,8,3};
+    float val2[] = {1,2,4,2};
+    setMatrix(3,3,val1,M0.element);
+    leftMatrix(3,3,2,2,M0.element,M1.element);
+
+    expect(2,2,M1.element,val2);
 }
 
 /*

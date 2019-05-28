@@ -22,7 +22,7 @@ float* setMatrix(uint8 x, uint8 y,float* a,float * c);
 float* copyMatrix(uint8 x, uint8 y,float* a,float * c);
 
 float* transMatrix(uint8 x, uint8 y,float* a,float * c);
-
+float* upTriangleMatrix(uint8 l,uint8 x, uint8 y, float*a);
 
 
 void swap(float* a, float* b);
@@ -31,6 +31,7 @@ void swap(float* a, float* b);
 float detMatrix(uint8 x, uint8 y, float* a);
 
 float* addMatrix(uint8 x, uint8 y,float* a, float * b, float * c);
+float* leftMatrix(uint8 x, uint8 y,uint8, uint8, float* a, float * b);
 float* subMatrix(uint8 x, uint8 y,float* a, float * b, float * c);
 float* multiMatrix(uint8 x, uint8 y,float* a,uint8 z, float * b, float * c);
 float* zerosMatrix(uint8 x, uint8 y,float* e);
