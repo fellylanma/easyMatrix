@@ -55,7 +55,7 @@ float detMatrix(uint8 x, uint8 y, float* a) {
     if(x!=y) return 0;
     //dumpMatrix(x,y,a);
     if(x==2) return(a[0]*a[3]-a[1]*a[2]);
-    if(x==3) return(a[0]*a[4]*a[8]+a[1]*a[5]*a[6]+a[2]*a[3]*a[7]-a[2]*a[4]*a[6]-a[1]*a[3]*a[8]-a[0]*a[5]*a[7]);
+    //if(x==3) return(a[0]*a[4]*a[8]+a[1]*a[5]*a[6]+a[2]*a[3]*a[7]-a[2]*a[4]*a[6]-a[1]*a[3]*a[8]-a[0]*a[5]*a[7]);
     float result = 0;
     signed char sign = 1;
     float* ret =(float*) malloc(sizeof(float)*(x-1)*(y-1));

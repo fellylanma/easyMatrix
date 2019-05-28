@@ -127,6 +127,21 @@ TEST(testCase, easyMatrixTest_DET5) {
     EXPECT_EQ(result,1475);
 }
 
+TEST(testCase, easyMatrixTest_DET7x7) {
+    easyMatrix4N4 M0;
+    float val1[] = {1,5,3,5,5,4,3,
+                    5,6,8,1,1,6,9,
+                    9,8,3,1,2,6,3,
+                    4,3,2,7,3,4,5,
+                    2,5,7,2,3,5,8,
+                    1,2,5,3,7,9,3,
+                    9,5,7,9,3,1,5
+                    };
+    setMatrix(7,7,val1,M0.element);
+    float result = detMatrix(7,7,M0.element);
+    EXPECT_EQ(result,-108006);
+}
+
 TEST(testCase, easyMatrixTest_ADD0) {
     easyMatrix4N4 M0;
     easyMatrix4N4 M1;
