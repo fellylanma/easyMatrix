@@ -15,3 +15,4 @@ m7 = np.array([
 ])
 print (det(m4))
 print (det(m7))
+print (np.linalg.inv(m7))
