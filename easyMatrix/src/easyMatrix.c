@@ -71,7 +71,6 @@ float* invMatrix(uint8 x, uint8 y, float *in , float* out) {
     adjMatrix(x,y,in,out);
     float scale = detMatrix(x,y,in);
     scale = 1/scale;
-    if(scale<0) scale = -scale;
     scaleMatrix(x,y,scale,out,out);
     return out;
 }
