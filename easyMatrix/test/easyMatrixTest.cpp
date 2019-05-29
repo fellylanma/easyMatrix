@@ -52,9 +52,9 @@ TEST(testCase, easyMatrixTest_ONES) {
     easyMatrix3N3 M0;
     setMatrix(3,3,val,M0.element);
     expect(3,3,val,M0.element);
-
+    float val1[] = {1,0,0,0,1,0,0,0,1};
     eyesMatrix(3,3,M0.element);
-    expect(3,3,M0.element,1.0f);
+    expect(3,3,M0.element,val1);
 };
 TEST(testCase, easyMatrixTest_TRANS0) {
     easyMatrix3N3 M0,M1;
@@ -147,9 +147,11 @@ TEST(testCase, easyMatrixTest_ADD0) {
     easyMatrix4N4 M1;
     float val1[] = {1,3,4,5,3,2,5,6,1,2,3,4,1,2,3,4};
     float val2[] = {1,3,4,5,3,2,5,6,1,2,3,4,1,2,3,4};
+    float val3[] = {1,3,4,5,3,2,5,6,1,2,3,4,1,2,3,4};
     for(int i=0;i<16;++i) val2[i] = val1[i] +1;
+    for(int i=0;i<16;++i) val3[i] = 1;
     setMatrix(4,4,val1,M0.element);
-    eyesMatrix(4,4,M1.element);
+    setMatrix(4,4,val3,M1.element);
     addMatrix(4,4,M1.element,M0.element,M1.element);
 
     expect(4,4,M1.element,val2);
@@ -160,9 +162,11 @@ TEST(testCase, easyMatrixTest_SUB0) {
     easyMatrix4N4 M1;
     float val1[] = {1,3,4,5,3,2,5,6,1,2,3,4,1,2,3,4};
     float val2[] = {1,3,4,5,3,2,5,6,1,2,3,4,1,2,3,4};
+    float val3[] = {1,3,4,5,3,2,5,6,1,2,3,4,1,2,3,4};
     for(int i=0;i<16;++i) val2[i] = val1[i] -1;
+    for(int i=0;i<16;++i) val3[i] = 1;
     setMatrix(4,4,val1,M0.element);
-    eyesMatrix(4,4,M1.element);
+    setMatrix(4,4,val3,M1.element);
     subMatrix(4,4,M0.element,M1.element,M1.element);
 
     expect(4,4,M1.element,val2);
@@ -209,8 +213,22 @@ TEST(testCase, easyMatrixTest_ADJ) {
     float val2[] = {1,1,-2,-1,1,4,1,-1,-2};
     setMatrix(3,3,val1,M0.element);
     adjMatrix(3,3,M0.element,M1.element);
-    dumpMatrix(3,3,M1.element);
     expect(3,3,M1.element,val2);
+}
+TEST(testCase, easyMatrixTest_INV) {
+    easyMatrix3N3 M0;
+    easyMatrix3N3 M1;
+    easyMatrix3N3 M2;
+    float val1[] = {1,2,3,1,0,-1,0,1,1};
+    float val2[] = {0.5,0.5,-1.0,
+                    -0.5,0.5,2.0,
+                    0.5,-0.5,-1.0};
+    setMatrix(3,3,val1,M0.element);
+    invMatrix(3,3,M0.element,M1.element);
+    expect(3,3,M1.element,val2);
+    multiMatrix(3,3,val1,3,val2,M2.element);
+    eyesMatrix(3,3,M0.element);
+    expect(3,3,M0.element,M2.element);
 }
 
 /*

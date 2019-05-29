@@ -67,6 +67,14 @@ float* adjMatrix(uint8 x, uint8 y, float* in, float *out) {
     return out;
 
 }
+float* invMatrix(uint8 x, uint8 y, float *in , float* out) {
+    adjMatrix(x,y,in,out);
+    float scale = detMatrix(x,y,in);
+    scale = 1/scale;
+    if(scale<0) scale = -scale;
+    scaleMatrix(x,y,scale,out,out);
+    return out;
+}
 
 float detMatrix(uint8 x, uint8 y, float* a) {
     if(x!=y) return 0;
@@ -127,6 +135,13 @@ float* subMatrix(uint8 x, uint8 y,float* a, float * b, float * c) {
     }
     return c;
 }
+float* scaleMatrix(uint8 x, uint8 y, float scale, float*a, float* b) {
+    int t = x*y;
+    for (int i = 0;i<t;++i) {
+        b[i] = a[i]*scale;
+    }
+    return b;
+}
 float* multiMatrix(uint8 x, uint8 y,float* a,uint8 z, float * b, float * c) {
     if(NULL==c) return NULL;
     if(c == a || c == b) return NULL;
@@ -169,9 +184,13 @@ float* zerosMatrix(uint8 x, uint8 y,float* e) {
     return e;
 }
 float* eyesMatrix(uint8 x, uint8 y, float*e) {
-    int t = x*y;
-    for(int i=0;i<t;++i) {
-        e[i] = 1.0;
+    for(int i=0;i<x;++i) {
+    for(int j=0;j<y;++j) {
+        if(i==j)
+        e[i*y+j] = 1.0;
+        else
+        e[i*y+j] = 0.0;
+    }
     }
     return e;
 }

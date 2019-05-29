@@ -29,6 +29,8 @@ void swap(float* a, float* b);
 
 
 float detMatrix(uint8 x, uint8 y, float* a);
+float* invMatrix(uint8 x, uint8 y, float* a, float*);
+float* scaleMatrix(uint8 x, uint8 y,float, float* a, float*);
 
 float* addMatrix(uint8 x, uint8 y,float* a, float * b, float * c);
 float* leftMatrix(uint8 x, uint8 y,uint8, uint8, float* a, float * b);
