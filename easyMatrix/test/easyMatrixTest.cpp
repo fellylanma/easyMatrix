@@ -202,6 +202,17 @@ TEST(testCase, easyMatrixTest_LEFT) {
     expect(2,2,M1.element,val2);
 }
 
+TEST(testCase, easyMatrixTest_ADJ) {
+    easyMatrix3N3 M0;
+    easyMatrix3N3 M1;
+    float val1[] = {1,2,3,1,0,-1,0,1,1};
+    float val2[] = {1,1,-2,-1,1,4,1,-1,-2};
+    setMatrix(3,3,val1,M0.element);
+    adjMatrix(3,3,M0.element,M1.element);
+    dumpMatrix(3,3,M1.element);
+    expect(3,3,M1.element,val2);
+}
+
 /*
 int main() {
     struct easyMatrix3N3 a;

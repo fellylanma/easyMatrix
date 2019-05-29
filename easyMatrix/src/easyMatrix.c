@@ -50,6 +50,23 @@ float* leftMatrix(uint8 x, uint8 y,uint8 x_i,uint8 y_i, float* in, float* out) {
     }
     return out;
 }
+float* adjMatrix(uint8 x, uint8 y, float* in, float *out) {
+    float* ret =(float*) malloc(sizeof(float)*(x-1)*(y-1));
+    signed char sign1 = 1;
+    signed char sign2 = 1;
+    for(uint8 ii=0;ii<x;++ii) {
+        sign2 = sign1;
+        for(uint8 jj=0;jj<y;++jj) {
+            leftMatrix(x,y,ii,jj,in,ret);
+            out[jj*y+ii] = sign2*detMatrix(x-1,y-1,ret);
+            sign2 = - sign2;    
+        }
+        
+        sign1 = - sign1;
+    }
+    return out;
+
+}
 
 float detMatrix(uint8 x, uint8 y, float* a) {
     if(x!=y) return 0;
@@ -172,25 +189,3 @@ void dumpMatrix(uint8 x, uint8 y, float*e) {
     return;
 }
 
-float* adjMatrix(uint8 x, uint8 y,float* a,float * c) {
-    float* adj =(float*) malloc(sizeof(float)*(x-1)*(y-1));
-    int index = 0;
-    for(int ii=0;ii<x;++ii) {
-        for(int jj=0;jj<y;++jj) {
-            index = 0;
-            for(int kk=0;kk<x;++kk) {
-                for(int ww=0;ww<y;++ww) {
-                    if(!(kk==ii||ww==jj)) {
-                        adj[index] = a[kk*y+ww];
-                        index++;
-                    }
-                }
-            }
-            dumpMatrix(2,2,adj);
-            printf("x,y:%d,%d",x,y);
-            c[ii*y+jj] = detMatrix(2,2,adj);
-            printf("adj det is:%d\n",c[ii*y+jj]);
-        }
-    }
-    return c;
-}
