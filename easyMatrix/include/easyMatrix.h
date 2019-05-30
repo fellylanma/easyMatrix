@@ -11,28 +11,36 @@
 #include <stdlib.h>
 typedef unsigned char uint8;
 
+float* setMatrix(uint8 x, uint8 y,float* a,float * c);
+
 #define declearMatrix(x,y) \
 struct easyMatrix##x##N##y {\
     uint8 rows,cols;\
     float element[x*y];\
-}\
+};\
+void initMatrix##x##N##y(float* a,struct easyMatrix##x##N##y* c) {\
+    c->rows = x,c->cols = y;\
+    if(a!=NULL)\
+    setMatrix(x,y,a,c->element);\
+};\
 
-float* setMatrix(uint8 x, uint8 y,float* a,float * c);
-
+struct easyMatrix {\
+    uint8 rows,cols;\
+    float element[4];\
+};\
 float* copyMatrix(uint8 x, uint8 y,float* a,float * c);
 
 float* transMatrix(uint8 x, uint8 y,float* a,float * c);
-float* upTriangleMatrix(uint8 l,uint8 x, uint8 y, float*a);
 
 
-void swap(float* a, float* b);
 
 
 float detMatrix(uint8 x, uint8 y, float* a);
-float* invMatrix(uint8 x, uint8 y, float* a, float*);
+float invMatrix(uint8 x, uint8 y, float* a, float*);
 float* scaleMatrix(uint8 x, uint8 y,float, float* a, float*);
 
-float* addMatrix(uint8 x, uint8 y,float* a, float * b, float * c);
+//float* addMatrix(uint8 x, uint8 y,float* a, float * b, float * c);
+void* addMatrix(void* a, void * b, void * c);
 float* leftMatrix(uint8 x, uint8 y,uint8, uint8, float* a, float * b);
 float* subMatrix(uint8 x, uint8 y,float* a, float * b, float * c);
 float* multiMatrix(uint8 x, uint8 y,float* a,uint8 z, float * b, float * c);
