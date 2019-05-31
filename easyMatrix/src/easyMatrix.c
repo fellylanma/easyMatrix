@@ -95,17 +95,16 @@ float* addMatrix(uint8 x, uint8 y,float* a, float * b, float * c) {
 void* addMatrix(void* a, void* b, void* c) {
     struct easyMatrix* obj = (struct easyMatrix*)a;
     int t = obj->rows*obj->cols;
-    printf("x:%f\n",obj->rows);
     for(int i=0;i<t;++i) {
-        printf("num:%d\n",a);
-       // ((struct easyMatrix*)c)->element[i] = obj->element[i]+((struct easyMatrix*)b)->element[i];
+        easy_cast(c)->element[i] = obj->element[i]+easy_cast(b)->element[i];
     }
     return c;
 }
-float* subMatrix(uint8 x, uint8 y,float* a, float * b, float * c) {
-    int t = x*y;
+void* subMatrix(void* a, void* b, void* c) {
+    struct easyMatrix* obj = (struct easyMatrix*)a;
+    int t = obj->rows*obj->cols;
     for(int i=0;i<t;++i) {
-        c[i] = a[i]-b[i];
+        easy_cast(c)->element[i] = obj->element[i]-easy_cast(b)->element[i];
     }
     return c;
 }

@@ -153,10 +153,7 @@ TEST(testCase, easyMatrixTest_ADD0) {
     for(int i=0;i<16;++i) val2[i] = val1[i] +1;
     for(int i=0;i<16;++i) val3[i] = 1;
     initMatrix4N4(val1,&M0);
-    //setMatrix(4,4,val1,M0.element);
     initMatrix4N4(val3,&M1);
-    //setMatrix(4,4,val3,M1.element);
-    printf("m1:%d\n",M1.cols);
     addMatrix(&M1,&M0,&M2);
 
     expect(4,4,M2.element,val2);
@@ -170,9 +167,9 @@ TEST(testCase, easyMatrixTest_SUB0) {
     float val3[] = {1,3,4,5,3,2,5,6,1,2,3,4,1,2,3,4};
     for(int i=0;i<16;++i) val2[i] = val1[i] -1;
     for(int i=0;i<16;++i) val3[i] = 1;
-    setMatrix(4,4,val1,M0.element);
-    setMatrix(4,4,val3,M1.element);
-    subMatrix(4,4,M0.element,M1.element,M1.element);
+    initMatrix4N4(val1,&M0);
+    initMatrix4N4(val3,&M1);
+    subMatrix(&M0,&M1,&M1);
 
     expect(4,4,M1.element,val2);
 }

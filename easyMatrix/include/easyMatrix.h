@@ -19,10 +19,13 @@ struct easyMatrix##x##N##y {\
     float element[x*y];\
 };\
 void initMatrix##x##N##y(float* a,struct easyMatrix##x##N##y* c) {\
-    c->rows = x,c->cols = y;\
+    c->rows = x;\
+    c->cols = y;\
     if(a!=NULL)\
     setMatrix(x,y,a,c->element);\
-};\
+};
+
+#define easy_cast(x) ((struct easyMatrix*)x)
 
 struct easyMatrix {\
     uint8 rows,cols;\
@@ -42,7 +45,7 @@ float* scaleMatrix(uint8 x, uint8 y,float, float* a, float*);
 //float* addMatrix(uint8 x, uint8 y,float* a, float * b, float * c);
 void* addMatrix(void* a, void * b, void * c);
 float* leftMatrix(uint8 x, uint8 y,uint8, uint8, float* a, float * b);
-float* subMatrix(uint8 x, uint8 y,float* a, float * b, float * c);
+void* subMatrix(void* a, void* b, void* c);
 float* multiMatrix(uint8 x, uint8 y,float* a,uint8 z, float * b, float * c);
 float* zerosMatrix(uint8 x, uint8 y,float* e);
 float* eyesMatrix(uint8 x, uint8 y, float*e);
