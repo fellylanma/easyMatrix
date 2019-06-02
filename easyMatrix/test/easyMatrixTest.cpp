@@ -35,42 +35,34 @@ void expect(int i, int j,float* a, float val) {
     }
 }
 TEST(testCase, easyMatrixTest_SET) {
-    easyMatrix3N3 M0;
-    {
-        setMatrix(3,3,val,M0.element);
-        expect(3,3,val,M0.element);
-    }
+    CREATE_MATRIX(3,3,M0,val);
+    expect(3,3,val,M0.element);
 };
 
 TEST(testCase, easyMatrixTest_ZEROS) {
     CREATE_MATRIX(3,3,M0,val);
-    //easyMatrix3N3 M0;
-    //initMatrix3N3(val,&M0);
-    //setMatrix(3,3,val,M0.element);
     expect(3,3,val,M0.element);
     zerosMatrix(&M0);
     expect(3,3,M0.element,0.0f);
 };
 TEST(testCase, easyMatrixTest_ONES) {
-    easyMatrix3N3 M0;
-    setMatrix(3,3,val,M0.element);
+    CREATE_MATRIX(3,3,M0,val);
     expect(3,3,val,M0.element);
     float val1[] = {1,0,0,0,1,0,0,0,1};
-    eyesMatrix(3,3,M0.element);
+    eyesMatrix(&M0);
     expect(3,3,M0.element,val1);
 };
 TEST(testCase, easyMatrixTest_TRANS0) {
-    easyMatrix3N3 M0,M1;
-    setMatrix(3,3,val,M0.element);
-    transMatrix(3,3,M0.element,M1.element);
+    CREATE_MATRIX(3,3,M0,val);
+    CREATE_MATRIX(3,3,M1,NULL);
+    transMatrix(&M0,&M1);
     float val1[] = {1,4,7,2,5,8,3,6,9};
     expect(3,3,M1.element,val1);
 }
 TEST(testCase, easyMatrixTest_TRANS1) {
-    easyMatrix2N3 N1;
-    easyMatrix3N2 N2;
-    setMatrix(2,3,val,N1.element);
-    transMatrix(2,3,N1.element,N2.element);
+    CREATE_MATRIX(2,3,N1,val);
+    CREATE_MATRIX(3,2,N2,NULL);
+    transMatrix(&N1,&N2);
     float val1[] = {1,4,2,5,3,6};
     expect(3,2,N2.element,val1);
 }
@@ -220,18 +212,17 @@ TEST(testCase, easyMatrixTest_ADJ) {
     expect(3,3,M1.element,val2);
 }
 TEST(testCase, easyMatrixTest_INV) {
-    easyMatrix3N3 M0;
-    easyMatrix3N3 M1;
-    easyMatrix3N3 M2;
     float val1[] = {1,2,3,1,0,-1,0,1,1};
+    CREATE_MATRIX(3,3,M0,val1);
+    CREATE_MATRIX(3,3,M1,NULL);
+    CREATE_MATRIX(3,3,M2,NULL);
     float val2[] = {0.5,0.5,-1.0,
                     -0.5,0.5,2.0,
                     0.5,-0.5,-1.0};
-    setMatrix(3,3,val1,M0.element);
     invMatrix(3,3,M0.element,M1.element);
     expect(3,3,M1.element,val2);
     multiMatrix(3,3,val1,3,val2,M2.element);
-    eyesMatrix(3,3,M0.element);
+    eyesMatrix(&M0);
     expect(3,3,M0.element,M2.element);
 }
 
@@ -251,6 +242,6 @@ TEST(testCase, easyMatrixTest_INV1) {
     invMatrix(7,7,M0.element,M1.element);
     //invMatrix(&M0,&M1);
     multiMatrix(7,7,val1,7,M1.element,M2.element);
-    eyesMatrix(7,7,M0.element);
+    eyesMatrix(&M0);
     expect(7,7,M0.element,M2.element);
 }

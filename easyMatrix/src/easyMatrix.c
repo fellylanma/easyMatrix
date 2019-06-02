@@ -23,10 +23,12 @@ float* copyMatrix(uint8 x, uint8 y,float* a,float * c) {
     return c;
 }
 
-float* transMatrix(uint8 x, uint8 y,float* a,float * c) {
-    for(int ii=0;ii<y;++ii) {
-        for(int jj=0;jj<x;++jj) {
-            c[ii*x+jj] = a[jj*y+ii];
+void* transMatrix(void* a,void* c) {
+    int index = 0;
+    for(int ii=0;ii<easy_cast(a)->cols;++ii) {
+        for(int jj=0;jj<easy_cast(a)->rows;++jj) {
+            easy_cast(c)->element[index] = easy_cast(a)->element[jj*easy_cast(a)->cols+ii];
+            index++;
         }
     }
     return c;
@@ -142,14 +144,16 @@ void* zerosMatrix(void* e) {
     }
     return e;
 }
-float* eyesMatrix(uint8 x, uint8 y, float*e) {
-    for(int i=0;i<x;++i) {
-    for(int j=0;j<y;++j) {
-        if(i==j)
-        e[i*y+j] = 1.0;
-        else
-        e[i*y+j] = 0.0;
-    }
+void* eyesMatrix(void* e) {
+    int index = 0;
+    for(int i=0;i<easy_cast(e)->rows;++i) {
+        for(int j=0;j<easy_cast(e)->cols;++j) {
+            if(i==j)
+                easy_cast(e)->element[index] = 1.0;
+            else
+                easy_cast(e)->element[index] = 0.0;
+            index++;
+        }
     }
     return e;
 }

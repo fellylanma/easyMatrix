@@ -38,7 +38,7 @@ struct easyMatrix {\
 };\
 float* copyMatrix(uint8 x, uint8 y,float* a,float * c);
 
-float* transMatrix(uint8 x, uint8 y,float* a,float * c);
+void* transMatrix(void* a,void* c);
 
 
 
@@ -53,7 +53,7 @@ float* leftMatrix(uint8 x, uint8 y,uint8, uint8, float* a, float * b);
 void* subMatrix(void* a, void* b, void* c);
 float* multiMatrix(uint8 x, uint8 y,float* a,uint8 z, float * b, float * c);
 void* zerosMatrix(void* e);
-float* eyesMatrix(uint8 x, uint8 y, float*e);
+void* eyesMatrix(void* e);
 void dumpMatrix(uint8 x, uint8 y, float*e);
 
 float* adjMatrix(uint8 x, uint8 y,float* a,float * c);
