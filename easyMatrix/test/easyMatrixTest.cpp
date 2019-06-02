@@ -43,10 +43,12 @@ TEST(testCase, easyMatrixTest_SET) {
 };
 
 TEST(testCase, easyMatrixTest_ZEROS) {
-    easyMatrix3N3 M0;
-    setMatrix(3,3,val,M0.element);
+    CREATE_MATRIX(3,3,M0,val);
+    //easyMatrix3N3 M0;
+    //initMatrix3N3(val,&M0);
+    //setMatrix(3,3,val,M0.element);
     expect(3,3,val,M0.element);
-    zerosMatrix(3,3,M0.element);
+    zerosMatrix(&M0);
     expect(3,3,M0.element,0.0f);
 };
 TEST(testCase, easyMatrixTest_ONES) {

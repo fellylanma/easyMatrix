@@ -135,10 +135,10 @@ float* multiMatrix(uint8 x, uint8 y,float* a,uint8 z, float * b, float * c) {
     }
     return c;
 }
-float* zerosMatrix(uint8 x, uint8 y,float* e) {
-    int t = x*y;
+void* zerosMatrix(void* e) {
+    int t = easy_cast(e)->cols*easy_cast(e)->rows;
     for(int i=0;i<t;++i) {
-        e[i] = 0;
+        easy_cast(e)->element[i] = 0;
     }
     return e;
 }
