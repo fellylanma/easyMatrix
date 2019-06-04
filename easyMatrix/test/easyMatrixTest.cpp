@@ -18,6 +18,7 @@ declearMatrix(2,2);
 declearMatrix(4,4);
 declearMatrix(1,4);
 declearMatrix(4,1);
+declearMatrix(1,1);
 declearMatrix(7,7);
 
 float val[] = {1,2,3,4,5,6,7,8,9};
@@ -68,8 +69,7 @@ TEST(testCase, easyMatrixTest_TRANS1) {
 }
 
 TEST(testCase, easyMatrixTest_DET) {
-    easyMatrix3N3 M0;
-    setMatrix(3,3,val,M0.element);
+    CREATE_MATRIX(3,3,M0,val);
     float result = detMatrix(3,3,M0.element);
     EXPECT_EQ(result,0);
 }
@@ -169,28 +169,23 @@ TEST(testCase, easyMatrixTest_SUB0) {
 }
 
 TEST(testCase, easyMatrixTest_MUL0) {
-    easyMatrix1N4 M0;
-    easyMatrix4N1 M1;
     float val1[] = {1,2,3,4};
-    setMatrix(1,4,val1,M0.element);
-    setMatrix(4,1,val1,M1.element);
-    float result;
-    multiMatrix(1,4,M0.element,1,M1.element,&result);
+    CREATE_MATRIX(1,4,M0,val1);
+    CREATE_MATRIX(4,1,M1,val1);
+    CREATE_MATRIX(1,1,M2,NULL);
+    multiMatrix(&M0,&M1,&M2);
 
-    EXPECT_EQ(result,30);
+    EXPECT_EQ(M2.element[0],30);
 }
 TEST(testCase, easyMatrixTest_MUL1) {
-    easyMatrix1N4 M0;
-    easyMatrix4N1 M1;
-    easyMatrix4N4 M2;
     float val1[] = {1,2,3,4};
     float val2[] = {1,2,3,4,2,4,6,8,3,6,9,12,4,8,12,16};
-    setMatrix(1,4,val1,M0.element);
-    setMatrix(4,1,val1,M1.element);
-    multiMatrix(4,1,M1.element,4,M0.element,M2.element);
+    CREATE_MATRIX(1,4,M0,val1);
+    CREATE_MATRIX(4,1,M1,val1);
+    CREATE_MATRIX(4,4,M2,NULL);
+    multiMatrix(&M1,&M0,&M2);
     expect(4,4,M2.element,val2);
 }
-
 TEST(testCase, easyMatrixTest_LEFT) {
     easyMatrix3N3 M0;
     easyMatrix2N2 M1;
@@ -221,15 +216,11 @@ TEST(testCase, easyMatrixTest_INV) {
                     0.5,-0.5,-1.0};
     invMatrix(3,3,M0.element,M1.element);
     expect(3,3,M1.element,val2);
-    multiMatrix(3,3,val1,3,val2,M2.element);
+    multiMatrix(&M0,&M1,&M2);
     eyesMatrix(&M0);
     expect(3,3,M0.element,M2.element);
 }
-
 TEST(testCase, easyMatrixTest_INV1) {
-    easyMatrix7N7 M0;
-    easyMatrix7N7 M1;
-    easyMatrix7N7 M2;
     float val1[] = {1,5,3,5,5,4,3,
                     5,6,8,1,1,6,9,
                     9,8,3,1,2,6,3,
@@ -238,10 +229,12 @@ TEST(testCase, easyMatrixTest_INV1) {
                     1,2,5,3,7,9,3,
                     9,5,7,9,3,1,5
                     };
-    initMatrix7N7(val1,&M0);
+    CREATE_MATRIX(7,7,M0,val1);
+    CREATE_MATRIX(7,7,M1,NULL);
+    CREATE_MATRIX(7,7,M2,NULL);
     invMatrix(7,7,M0.element,M1.element);
     //invMatrix(&M0,&M1);
-    multiMatrix(7,7,val1,7,M1.element,M2.element);
+    multiMatrix(&M0,&M1,&M2);
     eyesMatrix(&M0);
     expect(7,7,M0.element,M2.element);
 }

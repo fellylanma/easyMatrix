@@ -117,18 +117,21 @@ float* scaleMatrix(uint8 x, uint8 y, float scale, float*a, float* b) {
     }
     return b;
 }
-float* multiMatrix(uint8 x, uint8 y,float* a,uint8 z, float * b, float * c) {
+void* multiMatrix(void* a,void* b, void* c) {
     if(NULL==c) return NULL;
     if(c == a || c == b) return NULL;
     int count = 0;
     int t_cnt = 0;
     int z_cnt = 0;
+    uint8 x = easy_cast(a)->rows;
+    uint8 y = easy_cast(a)->cols;
+    uint8 z = easy_cast(b)->cols;
     for(int i = 0;i<x;++i) {
         for(int k = 0;k<z;++k) {
-            c[count] = 0;
+            easy_cast(c)->element[count] = 0;
             z_cnt = 0;
             for(int j = 0;j<y;++j) {
-                c[count] += a[t_cnt+j]*b[z_cnt+k];
+                easy_cast(c)->element[count] += easy_cast(a)->element[t_cnt+j]*easy_cast(b)->element[z_cnt+k];
                 z_cnt += z;
             }
             count++;

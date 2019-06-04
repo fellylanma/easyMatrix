@@ -34,7 +34,7 @@ initMatrix##x##N##y(initval, &matrix);
 
 struct easyMatrix {\
     uint8 rows,cols;\
-    float element[4];\
+    float element[1];\
 };\
 float* copyMatrix(uint8 x, uint8 y,float* a,float * c);
 
@@ -51,7 +51,7 @@ float* scaleMatrix(uint8 x, uint8 y,float, float* a, float*);
 void* addMatrix(void* a, void * b, void * c);
 float* leftMatrix(uint8 x, uint8 y,uint8, uint8, float* a, float * b);
 void* subMatrix(void* a, void* b, void* c);
-float* multiMatrix(uint8 x, uint8 y,float* a,uint8 z, float * b, float * c);
+void* multiMatrix(void* a, void* b, void* c);
 void* zerosMatrix(void* e);
 void* eyesMatrix(void* e);
 void dumpMatrix(uint8 x, uint8 y, float*e);
