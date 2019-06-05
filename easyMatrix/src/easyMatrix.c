@@ -34,12 +34,14 @@ void* transMatrix(void* a,void* c) {
     return c;
 }
 
-float* leftMatrix(uint8 x, uint8 y,uint8 x_i,uint8 y_i, float* in, float* out) {
+void* leftMatrix(uint8 x_i,uint8 y_i, void* const in, void* out) {
     int index = 0;
+    uint8 x = easy_cast(in)->rows;
+    uint8 y = easy_cast(in)->cols;
     for(int kk=0;kk<x;++kk) {
         for(int ww=0;ww<y;++ww) {
             if(!(kk==x_i||ww==y_i)) {
-                out[index] = in[kk*y+ww];
+                easy_cast(out)->element[index] = easy_cast(in)->element[kk*y+ww];
                 index++;
             }
         }
@@ -53,8 +55,8 @@ float* adjMatrix(uint8 x, uint8 y, float* in, float *out) {
     for(uint8 ii=0;ii<x;++ii) {
         sign2 = sign1;
         for(uint8 jj=0;jj<y;++jj) {
-            leftMatrix(x,y,ii,jj,in,ret);
-            out[jj*y+ii] = sign2*detMatrix(x-1,y-1,ret);
+            //leftMatrix(x,y,ii,jj,in,ret);
+            //out[jj*y+ii] = sign2*detMatrix(x-1,y-1,ret);
             sign2 = - sign2;    
         }
         
@@ -65,22 +67,31 @@ float* adjMatrix(uint8 x, uint8 y, float* in, float *out) {
 }
 float invMatrix(uint8 x, uint8 y, float *in , float* out) {
     adjMatrix(x,y,in,out);
-    float scale = detMatrix(x,y,in);
+    //float scale = detMatrix(x,y,in);
+    float a = 1;
     if(scale<1e-5&&scale>-1e-5) return 0.0;
     scale = 1/scale;
-    scaleMatrix(x,y,scale,out,out);
+    //scaleMatrix(scale,out,out);
     return scale;
 }
 
-float detMatrix(uint8 x, uint8 y, float* a) {
+float detMatrix(void* const in) {
+    uint8 x = easy_cast(in)->rows;
+    uint8 y = easy_cast(in)->cols;
     if(x!=y) return 0;
+    if(x==0 ) return 0;
+    if(x==1 ) return easy_cast(in)->element[0];
+    float *a = &(easy_cast(in)->element);
     if(x==2) return(a[0]*a[3]-a[1]*a[2]);
     float result = 0;
     signed char sign = 1;
-    float* ret =(float*) malloc(sizeof(float)*(x-1)*(y-1));
+    uint8 xx = x-1;
+    uint8 yy = y-1;
+    CREATE_MATRIX(xx,yy,ret,NULL);
+    //float* ret =(float*) malloc(sizeof(float)*(x-1)*(y-1));
     for(uint8 i=0;i<x;++i) {
-        leftMatrix(x,y,0,i,a,ret);
-        result += sign*a[0+i]*detMatrix(x-1,y-1,ret);
+        leftMatrix(0,i,in,&ret);
+        result += sign*a[0+i]*detMatrix(&ret);
         sign = - sign;
     }
     return result;
@@ -110,10 +121,10 @@ void* subMatrix(void* a, void* b, void* c) {
     }
     return c;
 }
-float* scaleMatrix(uint8 x, uint8 y, float scale, float*a, float* b) {
-    int t = x*y;
+void* scaleMatrix(float scale, void* const a, void* b) {
+    int t = easy_cast(a)->cols*easy_cast(a)->rows;
     for (int i = 0;i<t;++i) {
-        b[i] = a[i]*scale;
+        easy_cast(b)->element[i] = easy_cast(a)->element[i]*scale;
     }
     return b;
 }

@@ -46,6 +46,13 @@ TEST(testCase, easyMatrixTest_ZEROS) {
     zerosMatrix(&M0);
     expect(3,3,M0.element,0.0f);
 };
+TEST(testCase, easyMatrixTest_SCALE) {
+    CREATE_MATRIX(3,3,M0,val);
+    CREATE_MATRIX(3,3,M1,val);
+    expect(3,3,val,M0.element);
+    scaleMatrix(2,&M0,&M1);
+    dumpMatrix(3,3,M1.element);
+};
 TEST(testCase, easyMatrixTest_ONES) {
     CREATE_MATRIX(3,3,M0,val);
     expect(3,3,val,M0.element);
@@ -187,12 +194,11 @@ TEST(testCase, easyMatrixTest_MUL1) {
     expect(4,4,M2.element,val2);
 }
 TEST(testCase, easyMatrixTest_LEFT) {
-    easyMatrix3N3 M0;
-    easyMatrix2N2 M1;
     float val1[] = {1,2,3,4,2,4,6,8,3};
+    CREATE_MATRIX(3,3,M0,val1);
+    CREATE_MATRIX(3,3,M1,NULL);
     float val2[] = {1,2,4,2};
-    setMatrix(3,3,val1,M0.element);
-    leftMatrix(3,3,2,2,M0.element,M1.element);
+    leftMatrix(2,2,&M0,&M1);
 
     expect(2,2,M1.element,val2);
 }

@@ -43,13 +43,13 @@ void* transMatrix(void* a,void* c);
 
 
 
-float detMatrix(uint8 x, uint8 y, float* a);
+void detMatrix(void* const a);
 float invMatrix(uint8 x, uint8 y, float* a, float*);
-float* scaleMatrix(uint8 x, uint8 y,float, float* a, float*);
+void* scaleMatrix(float, void* const a, void*);
 
 //float* addMatrix(uint8 x, uint8 y,float* a, float * b, float * c);
 void* addMatrix(void* a, void * b, void * c);
-float* leftMatrix(uint8 x, uint8 y,uint8, uint8, float* a, float * b);
+void* leftMatrix(uint8, uint8, void* a, void* b);
 void* subMatrix(void* a, void* b, void* c);
 void* multiMatrix(void* a, void* b, void* c);
 void* zerosMatrix(void* e);
