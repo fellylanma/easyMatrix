@@ -16,11 +16,13 @@ float* setMatrix(uint8 x, uint8 y,float* a,float * c);
 #define declearMatrix(x,y) \
 struct easyMatrix##x##N##y {\
     uint8 rows,cols;\
-    float element[x*y];\
+    float* element;\
+    float memory[x*y];\
 };\
 void initMatrix##x##N##y(float* a,struct easyMatrix##x##N##y* c) {\
     c->rows = x;\
     c->cols = y;\
+    c->element = c->memory;\
     if(a!=NULL)\
     setMatrix(x,y,a,c->element);\
 };
@@ -31,10 +33,15 @@ void initMatrix##x##N##y(float* a,struct easyMatrix##x##N##y* c) {\
 easyMatrix##x##N##y matrix;\
 initMatrix##x##N##y(initval, &matrix);
 
+#define CREATE_DYNAMIC_MATRIX(x,y,matrix,initval) \
+struct easyMatrix matrix;\
+matrix.rows = x;\
+matrix.cols = y;\
+matrix.element = initval;
 
 struct easyMatrix {\
     uint8 rows,cols;\
-    float element[1];\
+    float* element;
 };\
 float* copyMatrix(uint8 x, uint8 y,float* a,float * c);
 
@@ -43,7 +50,7 @@ void* transMatrix(void* a,void* c);
 
 
 
-void detMatrix(void* const a);
+float detMatrix(void* const a);
 float invMatrix(uint8 x, uint8 y, float* a, float*);
 void* scaleMatrix(float, void* const a, void*);
 
@@ -56,5 +63,5 @@ void* zerosMatrix(void* e);
 void* eyesMatrix(void* e);
 void dumpMatrix(uint8 x, uint8 y, float*e);
 
-float* adjMatrix(uint8 x, uint8 y,float* a,float * c);
+void* adjMatrix(void* a,void* c);
 #endif//_MAGRIDE_PLANNING_EASYMATRIX_H_
