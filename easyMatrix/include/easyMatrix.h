@@ -39,6 +39,9 @@ matrix.rows = x;\
 matrix.cols = y;\
 matrix.element = initval;
 
+#define DELETE_DYNAMIC_MATRIX(matrix) \
+    free((matrix)->element);
+
 struct easyMatrix {\
     uint8 rows,cols;\
     float* element;

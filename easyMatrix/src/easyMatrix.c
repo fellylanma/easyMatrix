@@ -65,7 +65,7 @@ void* adjMatrix(void* in, void* out) {
         
         sign1 = - sign1;
     }
-    free(mem);
+    DELETE_DYNAMIC_MATRIX(&ret);
     return out;
 
 }
@@ -100,6 +100,7 @@ float detMatrix(void* const in) {
         result += sign*a[0+i]*detMatrix(&ret);
         sign = - sign;
     }
+    DELETE_DYNAMIC_MATRIX(&ret);
     return result;
 }
 /*
