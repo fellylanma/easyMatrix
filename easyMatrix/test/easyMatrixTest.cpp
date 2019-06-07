@@ -200,7 +200,6 @@ TEST(testCase, easyMatrixTest_ADJ) {
     adjMatrix(&M0,&M1);
     expect(3,3,M1.element,val2);
 }
-/*
 TEST(testCase, easyMatrixTest_INV) {
     float val1[] = {1,2,3,1,0,-1,0,1,1};
     CREATE_MATRIX(3,3,M0,val1);
@@ -209,7 +208,7 @@ TEST(testCase, easyMatrixTest_INV) {
     float val2[] = {0.5,0.5,-1.0,
                     -0.5,0.5,2.0,
                     0.5,-0.5,-1.0};
-    invMatrix(3,3,M0.element,M1.element);
+    invMatrix(&M0,&M1);
     expect(3,3,M1.element,val2);
     multiMatrix(&M0,&M1,&M2);
     eyesMatrix(&M0);
@@ -227,10 +226,8 @@ TEST(testCase, easyMatrixTest_INV1) {
     CREATE_MATRIX(7,7,M0,val1);
     CREATE_MATRIX(7,7,M1,NULL);
     CREATE_MATRIX(7,7,M2,NULL);
-    invMatrix(7,7,M0.element,M1.element);
-    //invMatrix(&M0,&M1);
+    invMatrix(&M0,&M1);
     multiMatrix(&M0,&M1,&M2);
     eyesMatrix(&M0);
     expect(7,7,M0.element,M2.element);
 }
-*/

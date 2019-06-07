@@ -51,8 +51,7 @@ void* leftMatrix(uint8 x_i,uint8 y_i, void* const in, void* out) {
 void* adjMatrix(void* in, void* out) {
     uint8 x = easy_cast(in)->rows;
     uint8 y = easy_cast(in)->cols;
-    float* mem =(float*) malloc(sizeof(float)*(x-1)*(y-1));
-    CREATE_DYNAMIC_MATRIX(x-1,y-1,ret,mem);
+    CREATE_DYNAMIC_MATRIX(x-1,y-1,ret);
     signed char sign1 = 1;
     signed char sign2 = 1;
     for(uint8 ii=0;ii<x;++ii) {
@@ -69,16 +68,13 @@ void* adjMatrix(void* in, void* out) {
     return out;
 
 }
-float invMatrix(uint8 x, uint8 y, float *in , float* out) {
-    /*
-    adjMatrix(x,y,in,out);
-    float scale = detMatrix(&in);
-    float a = 1;
+float invMatrix(void *in , void * out) {
+    adjMatrix(in,out);
+    float scale = detMatrix(in);
     if(scale<1e-5&&scale>-1e-5) return 0.0;
     scale = 1/scale;
-    //scaleMatrix(scale,out,out);
+    scaleMatrix(scale,out,out);
     return scale;
-    */
 }
 
 float detMatrix(void* const in) {
@@ -91,10 +87,7 @@ float detMatrix(void* const in) {
     if(x==2) return(a[0]*a[3]-a[1]*a[2]);
     float result = 0;
     signed char sign = 1;
-    struct easyMatrix ret;
-    ret.rows = x-1;
-    ret.cols = y-1;
-    ret.element = (float*) malloc(sizeof(float)*(x-1)*(y-1));
+    CREATE_DYNAMIC_MATRIX(x-1,y-1,ret);
     for(uint8 i=0;i<x;++i) {
         leftMatrix(0,i,in,&ret);
         result += sign*a[0+i]*detMatrix(&ret);

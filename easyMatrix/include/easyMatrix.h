@@ -33,11 +33,11 @@ void initMatrix##x##N##y(float* a,struct easyMatrix##x##N##y* c) {\
 easyMatrix##x##N##y matrix;\
 initMatrix##x##N##y(initval, &matrix);
 
-#define CREATE_DYNAMIC_MATRIX(x,y,matrix,initval) \
+#define CREATE_DYNAMIC_MATRIX(x,y,matrix) \
 struct easyMatrix matrix;\
 matrix.rows = x;\
 matrix.cols = y;\
-matrix.element = initval;
+matrix.element = (float*) malloc(sizeof(float)*(x)*(y));
 
 #define DELETE_DYNAMIC_MATRIX(matrix) \
     free((matrix)->element);
@@ -54,7 +54,7 @@ void* transMatrix(void* a,void* c);
 
 
 float detMatrix(void* const a);
-float invMatrix(uint8 x, uint8 y, float* a, float*);
+float invMatrix(void* a, void*b);
 void* scaleMatrix(float, void* const a, void*);
 
 //float* addMatrix(uint8 x, uint8 y,float* a, float * b, float * c);
