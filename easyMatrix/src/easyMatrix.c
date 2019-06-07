@@ -53,7 +53,7 @@ void* leftMatrix(uint8 x_i,uint8 y_i, void* const in, void* out) {
 void* adjMatrix(void* in, void* out) {
     uint8 x = easy_cast(in)->rows;
     uint8 y = easy_cast(in)->cols;
-    CREATE_DYNAMIC_MATRIX(x-1,y-1,ret);
+    CREATE_DYNAMIC_MATRIX(x-1,y-1,ret,NULL);
     signed char sign1 = 1;
     signed char sign2 = 1;
     for(uint8 ii=0;ii<x;++ii) {
@@ -89,7 +89,7 @@ float detMatrix(void* const in) {
     if(x==2) return(a[0]*a[3]-a[1]*a[2]);
     float result = 0;
     signed char sign = 1;
-    CREATE_DYNAMIC_MATRIX(x-1,y-1,ret);
+    CREATE_DYNAMIC_MATRIX(x-1,y-1,ret,NULL);
     for(uint8 i=0;i<x;++i) {
         leftMatrix(0,i,in,&ret);
         result += sign*a[0+i]*detMatrix(&ret);
