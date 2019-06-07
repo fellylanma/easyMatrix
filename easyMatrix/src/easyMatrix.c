@@ -43,14 +43,17 @@ struct easyMatrix* transMatrix(struct easyMatrix* const a,struct easyMatrix* c) 
 
 struct easyMatrix* leftMatrix(uint8 x_i,uint8 y_i, struct easyMatrix* const in, struct easyMatrix* out) {
     int index = 0;
+    int index_src = 0;
     uint8 x =in->rows;
     uint8 y =in->cols;
     for(uint8 kk=0;kk<x;++kk) {
         for(uint8 ww=0;ww<y;++ww) {
             if(!(kk==x_i||ww==y_i)) {
-                out->element[index] = in->element[kk*y+ww];
+                //out->element[index] = in->element[kk*y+ww];
+                out->element[index] = in->element[index_src];
                 index++;
             }
+            index_src++;
         }
     }
     return out;
