@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 #include "easyMatrix.h"
+
 struct easyMatrix* setMatrix(float * a,struct easyMatrix* c) {
     uint8 x = c->rows;
     uint8 y = c->cols;
@@ -68,8 +69,8 @@ struct easyMatrix* adjMatrix(struct easyMatrix* in, struct easyMatrix* out) {
     }
     DELETE_DYNAMIC_MATRIX(ret);
     return out;
-
 }
+
 float invMatrix(struct easyMatrix *in , struct easyMatrix * out) {
     adjMatrix(in,out);
     float scale = detMatrix(in);
@@ -98,15 +99,7 @@ float detMatrix(struct easyMatrix* const in) {
     DELETE_DYNAMIC_MATRIX(ret);
     return result;
 }
-/*
-float* addMatrix(uint8 x, uint8 y,float* a, float * b, float * c) {
-    int t = x*y;
-    for(int i=0;i<t;++i) {
-        c[i] = a[i]+b[i];
-    }
-    return c;
-}
-*/
+
 struct easyMatrix* addMatrix(struct easyMatrix* a, struct easyMatrix* b, struct easyMatrix* c) {
     struct easyMatrix* obj = (struct easyMatrix*)a;
     int t = obj->rows*obj->cols;
@@ -115,6 +108,7 @@ struct easyMatrix* addMatrix(struct easyMatrix* a, struct easyMatrix* b, struct 
     }
     return c;
 }
+
 struct easyMatrix* subMatrix(struct easyMatrix* a, struct easyMatrix* b, struct easyMatrix* c) {
     struct easyMatrix* obj = (struct easyMatrix*)a;
     int t = obj->rows*obj->cols;
@@ -123,6 +117,7 @@ struct easyMatrix* subMatrix(struct easyMatrix* a, struct easyMatrix* b, struct 
     }
     return c;
 }
+
 struct easyMatrix* scaleMatrix(float scale, struct easyMatrix* const a, struct easyMatrix* b) {
     int t = a->cols*a->rows;
     for (int i = 0;i<t;++i) {
@@ -130,6 +125,7 @@ struct easyMatrix* scaleMatrix(float scale, struct easyMatrix* const a, struct e
     }
     return b;
 }
+
 struct easyMatrix* multiMatrix(struct easyMatrix* a,struct easyMatrix* b, struct easyMatrix* c) {
     if(NULL==c) return NULL;
     if(c == a || c == b) return NULL;
@@ -153,6 +149,7 @@ struct easyMatrix* multiMatrix(struct easyMatrix* a,struct easyMatrix* b, struct
     }
     return c;
 }
+
 struct easyMatrix* zerosMatrix(struct easyMatrix* e) {
     int t = e->cols*e->rows;
     for(int i=0;i<t;++i) {
@@ -160,6 +157,7 @@ struct easyMatrix* zerosMatrix(struct easyMatrix* e) {
     }
     return e;
 }
+
 struct easyMatrix* eyesMatrix(struct easyMatrix* e) {
     int index = 0;
     for(int i=0;i<e->rows;++i) {
@@ -173,6 +171,7 @@ struct easyMatrix* eyesMatrix(struct easyMatrix* e) {
     }
     return e;
 }
+
 void dumpMatrix(struct easyMatrix*e) {
     int count = 0;
     uint8 x = e->rows;

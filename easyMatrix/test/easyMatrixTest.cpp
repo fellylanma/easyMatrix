@@ -153,7 +153,6 @@ TEST(testCase, easyMatrixTest_SUB0) {
     for(int i=0;i<16;++i) val3[i] = 1;
     CREATE_MATRIX_ONSTACK(4,4,M0,val1);
     CREATE_MATRIX_ONSTACK(4,4,M1,val3);
-    dumpMatrix(&M0);
     subMatrix(&M0,&M1,&M1);
 
     expect(4,4,M1.element,val2);
