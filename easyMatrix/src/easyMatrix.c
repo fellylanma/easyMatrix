@@ -28,8 +28,8 @@ struct easyMatrix* copyMatrix(struct easyMatrix* a,struct easyMatrix* c) {
 
 struct easyMatrix* transMatrix(struct easyMatrix* a,struct easyMatrix* c) {
     int index = 0;
-    for(int ii=0;ii<a->cols;++ii) {
-        for(int jj=0;jj<a->rows;++jj) {
+    for(uint8 ii=0;ii<a->cols;++ii) {
+        for(uint8 jj=0;jj<a->rows;++jj) {
             c->element[index] = a->element[jj*a->cols+ii];
             index++;
         }
@@ -41,8 +41,8 @@ struct easyMatrix* leftMatrix(uint8 x_i,uint8 y_i, struct easyMatrix* const in, 
     int index = 0;
     uint8 x =in->rows;
     uint8 y =in->cols;
-    for(int kk=0;kk<x;++kk) {
-        for(int ww=0;ww<y;++ww) {
+    for(uint8 kk=0;kk<x;++kk) {
+        for(uint8 ww=0;ww<y;++ww) {
             if(!(kk==x_i||ww==y_i)) {
                 out->element[index] = in->element[kk*y+ww];
                 index++;
@@ -135,11 +135,11 @@ struct easyMatrix* multiMatrix(struct easyMatrix* a,struct easyMatrix* b, struct
     uint8 x = a->rows;
     uint8 y = a->cols;
     uint8 z = b->cols;
-    for(int i = 0;i<x;++i) {
-        for(int k = 0;k<z;++k) {
+    for(uint8 i = 0;i<x;++i) {
+        for(uint8 k = 0;k<z;++k) {
             c->element[count] = 0;
             z_cnt = 0;
-            for(int j = 0;j<y;++j) {
+            for(uint8 j = 0;j<y;++j) {
                 c->element[count] += a->element[t_cnt+j]*b->element[z_cnt+k];
                 z_cnt += z;
             }
@@ -160,8 +160,8 @@ struct easyMatrix* zerosMatrix(struct easyMatrix* e) {
 
 struct easyMatrix* eyesMatrix(struct easyMatrix* e) {
     int index = 0;
-    for(int i=0;i<e->rows;++i) {
-        for(int j=0;j<e->cols;++j) {
+    for(uint8 i=0;i<e->rows;++i) {
+        for(uint8 j=0;j<e->cols;++j) {
             if(i==j)
                 e->element[index] = 1.0;
             else
@@ -177,8 +177,8 @@ void dumpMatrix(struct easyMatrix*e) {
     uint8 x = e->rows;
     uint8 y = e->cols;
     printf("cols is:%d, rows is:%d\n",x,y);
-    for(int i = 0;i<x;++i) {
-        for(int j = 0;j<y;++j) {
+    for(uint8 i = 0;i<x;++i) {
+        for(uint8 j = 0;j<y;++j) {
             printf("%8f,",e->element[count]);
             ++count;
         }
