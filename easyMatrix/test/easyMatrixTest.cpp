@@ -29,6 +29,12 @@ TEST(testCase, easyMatrixTest_SET) {
     CREATE_MATRIX(3,3,M0,val);
     expect(3,3,val,M0.element);
 };
+TEST(testCase, easyMatrixTest_COPY) {
+    CREATE_MATRIX(3,3,M0,val);
+    CREATE_MATRIX(3,3,M1,NULL);
+    copyMatrix(&M0,&M1);
+    expect(3,3,val,M1.element);
+};
 
 TEST(testCase, easyMatrixTest_ZEROS) {
     CREATE_MATRIX(3,3,M0,val);

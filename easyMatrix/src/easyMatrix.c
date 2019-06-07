@@ -17,10 +17,10 @@ struct easyMatrix* setMatrix(float * a,struct easyMatrix* c) {
     return c;
 }
 
-float* copyMatrix(uint8 x, uint8 y,float* a,float * c) {
-    int t = x*y;
+struct easyMatrix* copyMatrix(struct easyMatrix* a,struct easyMatrix* c) {
+    int t = a->rows*a->cols;
     for(int i=0;i<t;++i) {
-        c[i] = a[i];
+        c->element[i] = a->element[i];
     }
     return c;
 }

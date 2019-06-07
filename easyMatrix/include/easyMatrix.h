@@ -38,7 +38,7 @@ struct easyMatrix {\
     uint8 rows,cols;\
     float* element;
 };\
-float* copyMatrix(uint8 x, uint8 y,float* a,float * c);
+struct easyMatrix* copyMatrix(struct easyMatrix* a,struct easyMatrix* c);
 
 struct easyMatrix* transMatrix(struct easyMatrix* a,struct easyMatrix* c);
 
