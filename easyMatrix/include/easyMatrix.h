@@ -13,7 +13,7 @@ typedef unsigned char uint8;
 
 struct easyMatrix* setMatrix(float* a,struct easyMatrix* c);
 
-#define CREATE_MATRIX(x,y,matrix,initval) \
+#define CREATE_MATRIX_ONSTACK(x,y,matrix,initval) \
 struct easyMatrix matrix;\
 float val##x##N##y##N##matrix[x*y];\
     matrix.rows = x;\
@@ -22,7 +22,7 @@ float val##x##N##y##N##matrix[x*y];\
     if(initval!=NULL)\
     setMatrix(initval, &(matrix));
 
-#define CREATE_DYNAMIC_MATRIX(x,y,matrix,initval) \
+#define CREATE_DYNAMIC_MATRIX_ONHEAP(x,y,matrix,initval) \
 struct easyMatrix *matrix = (struct easyMatrix*)malloc(sizeof(struct easyMatrix));\
 matrix->rows = x;\
 matrix->cols = y;\

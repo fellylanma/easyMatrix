@@ -26,65 +26,65 @@ void expect(int i, int j,float* a, float val) {
     }
 }
 TEST(testCase, easyMatrixTest_SET) {
-    CREATE_MATRIX(3,3,M0,val);
+    CREATE_MATRIX_ONSTACK(3,3,M0,val);
     expect(3,3,val,M0.element);
 };
 TEST(testCase, easyMatrixTest_COPY) {
-    CREATE_MATRIX(3,3,M0,val);
-    CREATE_MATRIX(3,3,M1,NULL);
+    CREATE_MATRIX_ONSTACK(3,3,M0,val);
+    CREATE_MATRIX_ONSTACK(3,3,M1,NULL);
     copyMatrix(&M0,&M1);
     expect(3,3,val,M1.element);
 };
 
 TEST(testCase, easyMatrixTest_ZEROS) {
-    CREATE_MATRIX(3,3,M0,val);
+    CREATE_MATRIX_ONSTACK(3,3,M0,val);
     expect(3,3,val,M0.element);
     zerosMatrix(&M0);
     expect(3,3,M0.element,0.0f);
 };
 TEST(testCase, easyMatrixTest_SCALE) {
-    CREATE_MATRIX(3,3,M0,val);
-    CREATE_MATRIX(3,3,M1,val);
+    CREATE_MATRIX_ONSTACK(3,3,M0,val);
+    CREATE_MATRIX_ONSTACK(3,3,M1,val);
     expect(3,3,val,M0.element);
     scaleMatrix(2,&M0,&M1);
 };
 TEST(testCase, easyMatrixTest_ONES) {
-    CREATE_MATRIX(3,3,M0,val);
+    CREATE_MATRIX_ONSTACK(3,3,M0,val);
     expect(3,3,val,M0.element);
     float val1[] = {1,0,0,0,1,0,0,0,1};
     eyesMatrix(&M0);
     expect(3,3,M0.element,val1);
 };
 TEST(testCase, easyMatrixTest_TRANS0) {
-    CREATE_MATRIX(3,3,M0,val);
-    CREATE_MATRIX(3,3,M1,NULL);
+    CREATE_MATRIX_ONSTACK(3,3,M0,val);
+    CREATE_MATRIX_ONSTACK(3,3,M1,NULL);
     transMatrix(&M0,&M1);
     float val1[] = {1,4,7,2,5,8,3,6,9};
     expect(3,3,M1.element,val1);
 }
 TEST(testCase, easyMatrixTest_TRANS1) {
-    CREATE_MATRIX(2,3,N1,val);
-    CREATE_MATRIX(3,2,N2,NULL);
+    CREATE_MATRIX_ONSTACK(2,3,N1,val);
+    CREATE_MATRIX_ONSTACK(3,2,N2,NULL);
     transMatrix(&N1,&N2);
     float val1[] = {1,4,2,5,3,6};
     expect(3,2,N2.element,val1);
 }
 
 TEST(testCase, easyMatrixTest_DET) {
-    CREATE_MATRIX(3,3,M0,val);
+    CREATE_MATRIX_ONSTACK(3,3,M0,val);
     float result = detMatrix(&M0);
     EXPECT_EQ(result,0);
 }
 TEST(testCase, easyMatrixTest_DET1) {
     float val1[] = {1,3,4,5,6,7,2,3,5};
-    CREATE_MATRIX(3,3,M0,val1);
+    CREATE_MATRIX_ONSTACK(3,3,M0,val1);
     float result = detMatrix(&M0);
     EXPECT_EQ(result,-12);
 }
 
 TEST(testCase, easyMatrixTest_DET2) {
     float val1[] = {1,3,4,5};
-    CREATE_MATRIX(2,2,M0,val1);
+    CREATE_MATRIX_ONSTACK(2,2,M0,val1);
     float result = detMatrix(&M0);
     EXPECT_EQ(result,-7);
 }
@@ -93,7 +93,7 @@ TEST(testCase, easyMatrixTest_DET3) {
                     0,1,2,3,
                     0,0,1,2,
                     0,0,0,1};
-    CREATE_MATRIX(4,4,M0,val1);
+    CREATE_MATRIX_ONSTACK(4,4,M0,val1);
     float result = detMatrix(&M0);
     EXPECT_EQ(result,1);
 }
@@ -102,7 +102,7 @@ TEST(testCase, easyMatrixTest_DET4) {
     float val1[] = {1,2,3,
                     0,1,2,
                     0,0,1};
-    CREATE_MATRIX(3,3,M0,val1);
+    CREATE_MATRIX_ONSTACK(3,3,M0,val1);
     float result = detMatrix(&M0);
     EXPECT_EQ(result,1);
 }
@@ -112,7 +112,7 @@ TEST(testCase, easyMatrixTest_DET5) {
                     5,6,8,1,
                     9,8,3,1,
                     4,3,2,7 };
-    CREATE_MATRIX(4,4,M0,val1);
+    CREATE_MATRIX_ONSTACK(4,4,M0,val1);
     float result = detMatrix(&M0);
     EXPECT_EQ(result,1475);
 }
@@ -126,7 +126,7 @@ TEST(testCase, easyMatrixTest_DET7x7) {
                     1,2,5,3,7,9,3,
                     9,5,7,9,3,1,5
                     };
-    CREATE_MATRIX(7,7,M0,val1);
+    CREATE_MATRIX_ONSTACK(7,7,M0,val1);
     float result = detMatrix(&M0);
     EXPECT_EQ(result,-108006);
 }
@@ -137,9 +137,9 @@ TEST(testCase, easyMatrixTest_ADD0) {
     float val3[16];
     for(int i=0;i<16;++i) val2[i] = val1[i] +1;
     for(int i=0;i<16;++i) val3[i] = 1;
-    CREATE_MATRIX(4,4,M0,val1);
-    CREATE_MATRIX(4,4,M1,val3);
-    CREATE_MATRIX(4,4,M2,NULL);
+    CREATE_MATRIX_ONSTACK(4,4,M0,val1);
+    CREATE_MATRIX_ONSTACK(4,4,M1,val3);
+    CREATE_MATRIX_ONSTACK(4,4,M2,NULL);
     addMatrix(&M1,&M0,&M2);
 
     expect(4,4,M2.element,val2);
@@ -151,8 +151,8 @@ TEST(testCase, easyMatrixTest_SUB0) {
     float val3[16];
     for(int i=0;i<16;++i) val2[i] = val1[i] -1;
     for(int i=0;i<16;++i) val3[i] = 1;
-    CREATE_MATRIX(4,4,M0,val1);
-    CREATE_MATRIX(4,4,M1,val3);
+    CREATE_MATRIX_ONSTACK(4,4,M0,val1);
+    CREATE_MATRIX_ONSTACK(4,4,M1,val3);
     dumpMatrix(&M0);
     subMatrix(&M0,&M1,&M1);
 
@@ -161,9 +161,9 @@ TEST(testCase, easyMatrixTest_SUB0) {
 
 TEST(testCase, easyMatrixTest_MUL0) {
     float val1[] = {1,2,3,4};
-    CREATE_MATRIX(1,4,M0,val1);
-    CREATE_MATRIX(4,1,M1,val1);
-    CREATE_MATRIX(1,1,M2,NULL);
+    CREATE_MATRIX_ONSTACK(1,4,M0,val1);
+    CREATE_MATRIX_ONSTACK(4,1,M1,val1);
+    CREATE_MATRIX_ONSTACK(1,1,M2,NULL);
     multiMatrix(&M0,&M1,&M2);
 
     EXPECT_EQ(M2.element[0],30);
@@ -171,16 +171,16 @@ TEST(testCase, easyMatrixTest_MUL0) {
 TEST(testCase, easyMatrixTest_MUL1) {
     float val1[] = {1,2,3,4};
     float val2[] = {1,2,3,4,2,4,6,8,3,6,9,12,4,8,12,16};
-    CREATE_MATRIX(1,4,M0,val1);
-    CREATE_MATRIX(4,1,M1,val1);
-    CREATE_MATRIX(4,4,M2,NULL);
+    CREATE_MATRIX_ONSTACK(1,4,M0,val1);
+    CREATE_MATRIX_ONSTACK(4,1,M1,val1);
+    CREATE_MATRIX_ONSTACK(4,4,M2,NULL);
     multiMatrix(&M1,&M0,&M2);
     expect(4,4,M2.element,val2);
 }
 TEST(testCase, easyMatrixTest_LEFT) {
     float val1[] = {1,2,3,4,2,4,6,8,3};
-    CREATE_MATRIX(3,3,M0,val1);
-    CREATE_MATRIX(3,3,M1,NULL);
+    CREATE_MATRIX_ONSTACK(3,3,M0,val1);
+    CREATE_MATRIX_ONSTACK(3,3,M1,NULL);
     float val2[] = {1,2,4,2};
     leftMatrix(2,2,&M0,&M1);
 
@@ -189,16 +189,16 @@ TEST(testCase, easyMatrixTest_LEFT) {
 TEST(testCase, easyMatrixTest_ADJ) {
     float val1[] = {1,2,3,1,0,-1,0,1,1};
     float val2[] = {1,1,-2,-1,1,4,1,-1,-2};
-    CREATE_MATRIX(3,3,M0,val1);
-    CREATE_MATRIX(3,3,M1,NULL);
+    CREATE_MATRIX_ONSTACK(3,3,M0,val1);
+    CREATE_MATRIX_ONSTACK(3,3,M1,NULL);
     adjMatrix(&M0,&M1);
     expect(3,3,M1.element,val2);
 }
 TEST(testCase, easyMatrixTest_INV) {
     float val1[] = {1,2,3,1,0,-1,0,1,1};
-    CREATE_MATRIX(3,3,M0,val1);
-    CREATE_MATRIX(3,3,M1,NULL);
-    CREATE_MATRIX(3,3,M2,NULL);
+    CREATE_MATRIX_ONSTACK(3,3,M0,val1);
+    CREATE_MATRIX_ONSTACK(3,3,M1,NULL);
+    CREATE_MATRIX_ONSTACK(3,3,M2,NULL);
     float val2[] = {0.5,0.5,-1.0,
                     -0.5,0.5,2.0,
                     0.5,-0.5,-1.0};
@@ -217,9 +217,9 @@ TEST(testCase, easyMatrixTest_INV1) {
                     1,2,5,3,7,9,3,
                     9,5,7,9,3,1,5
                     };
-    CREATE_MATRIX(7,7,M0,val1);
-    CREATE_MATRIX(7,7,M1,NULL);
-    CREATE_MATRIX(7,7,M2,NULL);
+    CREATE_MATRIX_ONSTACK(7,7,M0,val1);
+    CREATE_MATRIX_ONSTACK(7,7,M1,NULL);
+    CREATE_MATRIX_ONSTACK(7,7,M2,NULL);
     invMatrix(&M0,&M1);
     multiMatrix(&M0,&M1,&M2);
     eyesMatrix(&M0);
