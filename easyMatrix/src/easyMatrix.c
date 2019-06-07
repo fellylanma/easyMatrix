@@ -59,14 +59,14 @@ struct easyMatrix* adjMatrix(struct easyMatrix* in, struct easyMatrix* out) {
     for(uint8 ii=0;ii<x;++ii) {
         sign2 = sign1;
         for(uint8 jj=0;jj<y;++jj) {
-            leftMatrix(ii,jj,in,&ret);
-            out->element[jj*y+ii] = sign2*detMatrix(&ret);
+            leftMatrix(ii,jj,in,ret);
+            out->element[jj*y+ii] = sign2*detMatrix(ret);
             sign2 = - sign2;    
         }
         
         sign1 = - sign1;
     }
-    DELETE_DYNAMIC_MATRIX(&ret);
+    DELETE_DYNAMIC_MATRIX(ret);
     return out;
 
 }
@@ -91,11 +91,11 @@ float detMatrix(struct easyMatrix* const in) {
     signed char sign = 1;
     CREATE_DYNAMIC_MATRIX(x-1,y-1,ret,NULL);
     for(uint8 i=0;i<x;++i) {
-        leftMatrix(0,i,in,&ret);
-        result += sign*a[0+i]*detMatrix(&ret);
+        leftMatrix(0,i,in,ret);
+        result += sign*a[0+i]*detMatrix(ret);
         sign = - sign;
     }
-    DELETE_DYNAMIC_MATRIX(&ret);
+    DELETE_DYNAMIC_MATRIX(ret);
     return result;
 }
 /*

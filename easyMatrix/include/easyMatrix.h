@@ -23,15 +23,16 @@ float val##x##N##y##N##matrix[x*y];\
     setMatrix(initval, &(matrix));
 
 #define CREATE_DYNAMIC_MATRIX(x,y,matrix,initval) \
-struct easyMatrix matrix;\
-matrix.rows = x;\
-matrix.cols = y;\
-matrix.element = (float*) malloc(sizeof(float)*(x)*(y));\
+struct easyMatrix *matrix = (struct easyMatrix*)malloc(sizeof(struct easyMatrix));\
+matrix->rows = x;\
+matrix->cols = y;\
+matrix->element = (float*) malloc(sizeof(float)*(x)*(y));\
 if(initval!=NULL)\
-    setMatrix(initval, &(matrix));
+    setMatrix(initval, (matrix));
 
 #define DELETE_DYNAMIC_MATRIX(matrix) \
-    free((matrix)->element);
+    free((matrix)->element);\
+    free(matrix);
 
 struct easyMatrix {\
     uint8 rows,cols;\
