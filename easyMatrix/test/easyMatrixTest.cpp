@@ -179,7 +179,7 @@ TEST(testCase, easyMatrixTest_MUL1) {
 TEST(testCase, easyMatrixTest_LEFT) {
     DATA_TYPE val1[] = {1,2,3,4,2,4,6,8,3};
     CREATE_MATRIX_ONSTACK(3,3,M0,val1);
-    CREATE_MATRIX_ONSTACK(3,3,M1,NULL);
+    CREATE_MATRIX_ONSTACK(2,2,M1,NULL);
     DATA_TYPE val2[] = {1,2,4,2};
     leftMatrix(2,2,&M0,&M1);
 

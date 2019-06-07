@@ -19,6 +19,8 @@ struct easyMatrix* setMatrix(DATA_TYPE * const a,struct easyMatrix* c) {
 }
 
 struct easyMatrix* copyMatrix(struct easyMatrix* const a,struct easyMatrix* c) {
+    if(a->rows != c->rows) return NULL;
+    if(a->cols != c->cols) return NULL;
     int t = a->rows*a->cols;
     for(int i=0;i<t;++i) {
         c->element[i] = a->element[i];
@@ -27,6 +29,8 @@ struct easyMatrix* copyMatrix(struct easyMatrix* const a,struct easyMatrix* c) {
 }
 
 struct easyMatrix* transMatrix(struct easyMatrix* const a,struct easyMatrix* c) {
+    if(a->rows != c->cols) return NULL;
+    if(a->cols != c->rows) return NULL;
     int index = 0;
     int index_src = 0;
     for(uint8 ii=0;ii<a->cols;++ii) {
@@ -42,6 +46,9 @@ struct easyMatrix* transMatrix(struct easyMatrix* const a,struct easyMatrix* c) 
 }
 
 struct easyMatrix* leftMatrix(uint8 x_i,uint8 y_i, struct easyMatrix* const in, struct easyMatrix* out) {
+    if(in->rows != in->cols) return NULL;
+    if(out->rows != out->cols) return NULL;
+    if(in->rows != (out->rows+1)) return NULL;
     int index = 0;
     int index_src = 0;
     uint8 x =in->rows;
@@ -59,6 +66,8 @@ struct easyMatrix* leftMatrix(uint8 x_i,uint8 y_i, struct easyMatrix* const in, 
     return out;
 }
 struct easyMatrix* adjMatrix(struct easyMatrix* const in, struct easyMatrix* out) {
+    if(in->rows != out->cols) return NULL;
+    if(in->cols != out->rows) return NULL;
     int index = 0;
     uint8 x = in->rows;
     uint8 y = in->cols;
@@ -83,6 +92,9 @@ struct easyMatrix* adjMatrix(struct easyMatrix* const in, struct easyMatrix* out
 }
 
 DATA_TYPE invMatrix(struct easyMatrix *const in , struct easyMatrix * out) {
+    if(in->cols!=in->rows) return 0;
+    if(in->rows != out->cols) return 0;
+    if(in->cols != out->rows) return 0;
     adjMatrix(in,out);
     DATA_TYPE scale = detMatrix(in);
     if(scale<1e-5&&scale>-1e-5) return 0.0;
@@ -112,6 +124,8 @@ DATA_TYPE detMatrix(struct easyMatrix* const in) {
 }
 
 struct easyMatrix* addMatrix(struct easyMatrix* const a, struct easyMatrix* const b, struct easyMatrix* c) {
+    if(a->cols != b->cols) return NULL;
+    if(a->rows != b->rows) return NULL;
     struct easyMatrix* obj = (struct easyMatrix*)a;
     int t = obj->rows*obj->cols;
     for(int i=0;i<t;++i) {
@@ -121,6 +135,8 @@ struct easyMatrix* addMatrix(struct easyMatrix* const a, struct easyMatrix* cons
 }
 
 struct easyMatrix* subMatrix(struct easyMatrix* const a, struct easyMatrix* const b, struct easyMatrix* c) {
+    if(a->cols != b->cols) return NULL;
+    if(a->rows != b->rows) return NULL;
     struct easyMatrix* obj = (struct easyMatrix*)a;
     int t = obj->rows*obj->cols;
     for(int i=0;i<t;++i) {
@@ -140,6 +156,7 @@ struct easyMatrix* scaleMatrix(DATA_TYPE scale, struct easyMatrix* const a, stru
 struct easyMatrix* multiMatrix(struct easyMatrix* const a,struct easyMatrix* const b, struct easyMatrix* c) {
     if(NULL==c) return NULL;
     if(c == a || c == b) return NULL;
+    if(a->cols != b->rows) return NULL;
     int count = 0;
     int t_cnt = 0;
     int z_cnt = 0;
@@ -162,7 +179,6 @@ struct easyMatrix* multiMatrix(struct easyMatrix* const a,struct easyMatrix* con
 }
 
 struct easyMatrix* zerosMatrix(struct easyMatrix* e) {
-    if(e->rows != e->cols) return NULL;
     int t = e->cols*e->rows;
     for(int i=0;i<t;++i) {
         e->element[i] = 0;
@@ -184,8 +200,8 @@ struct easyMatrix* eyesMatrix(struct easyMatrix* e) {
 
 void dumpMatrix(struct easyMatrix* const e) {
     int count = 0;
-    uint8 x = e->rows;
-    uint8 y = e->cols;
+    int x = e->rows;
+    int y = e->cols;
     printf("cols is:%d, rows is:%d\n",x,y);
     for(uint8 i = 0;i<x;++i) {
         for(uint8 j = 0;j<y;++j) {
