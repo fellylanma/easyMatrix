@@ -162,6 +162,7 @@ struct easyMatrix* multiMatrix(struct easyMatrix* const a,struct easyMatrix* con
 }
 
 struct easyMatrix* zerosMatrix(struct easyMatrix* e) {
+    if(e->rows != e->cols) return NULL;
     int t = e->cols*e->rows;
     for(int i=0;i<t;++i) {
         e->element[i] = 0;
@@ -170,15 +171,13 @@ struct easyMatrix* zerosMatrix(struct easyMatrix* e) {
 }
 
 struct easyMatrix* eyesMatrix(struct easyMatrix* e) {
+    if(e->rows != e->cols) return NULL;
+    zerosMatrix(e);
     int index = 0;
     for(uint8 i=0;i<e->rows;++i) {
-        for(uint8 j=0;j<e->cols;++j) {
-            if(i==j)
-                e->element[index] = 1.0;
-            else
-                e->element[index] = 0.0;
-            index++;
-        }
+        e->element[index] = 1.0;
+        index+=(e->cols);
+        ++index;
     }
     return e;
 }
