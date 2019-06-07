@@ -15,41 +15,39 @@ typedef float DATA_TYPE;
 
 #define CREATE_MATRIX_ONSTACK(x,y,matrix,initval) \
 struct easyMatrix matrix;\
-float val##x##N##y##N##matrix[x*y];\
+DATA_TYPE val##x##N##y##N##matrix[x*y];\
     matrix.rows = x;\
     matrix.cols = y;\
     matrix.element = val##x##N##y##N##matrix;\
-    if(initval!=NULL)\
-    setMatrix(initval, &(matrix));
+    if(initval!=NULL) setMatrix(initval, &(matrix))
 
 #define CREATE_DYNAMIC_MATRIX_ONHEAP(x,y,matrix,initval) \
 struct easyMatrix *matrix = (struct easyMatrix*)malloc(sizeof(struct easyMatrix));\
 matrix->rows = x;\
 matrix->cols = y;\
-matrix->element = (float*) malloc(sizeof(float)*(x)*(y));\
-if(initval!=NULL)\
-    setMatrix(initval, (matrix));
+matrix->element = (DATA_TYPE*) malloc(sizeof(DATA_TYPE)*(x)*(y));\
+if(initval!=NULL) setMatrix(initval, (matrix))
 
 #define DELETE_DYNAMIC_MATRIX(matrix) \
     free((matrix)->element);\
-    free(matrix);
+    free(matrix)
 
 struct easyMatrix {\
     uint8 rows,cols;\
-    float* element;
+    DATA_TYPE* element;
 };\
 
-struct easyMatrix* setMatrix(float* a,struct easyMatrix* c);
+struct easyMatrix* setMatrix(DATA_TYPE* a,struct easyMatrix* c);
 
 struct easyMatrix* copyMatrix(struct easyMatrix* a,struct easyMatrix* c);
 
 struct easyMatrix* transMatrix(struct easyMatrix* a,struct easyMatrix* c);
 
-float detMatrix(struct easyMatrix* const a);
+DATA_TYPE detMatrix(struct easyMatrix* const a);
 
-float invMatrix(struct easyMatrix* a, struct easyMatrix*b);
+DATA_TYPE invMatrix(struct easyMatrix* a, struct easyMatrix*b);
 
-struct easyMatrix* scaleMatrix(float, struct easyMatrix* const a, struct easyMatrix*);
+struct easyMatrix* scaleMatrix(DATA_TYPE, struct easyMatrix* const a, struct easyMatrix*);
 
 struct easyMatrix* addMatrix(struct easyMatrix* a, struct easyMatrix * b, struct easyMatrix * c);
 

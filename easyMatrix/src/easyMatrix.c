@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include "easyMatrix.h"
 
-struct easyMatrix* setMatrix(float * a,struct easyMatrix* c) {
+struct easyMatrix* setMatrix(DATA_TYPE * a,struct easyMatrix* c) {
     uint8 x = c->rows;
     uint8 y = c->cols;
     int t = x*y;
@@ -71,24 +71,24 @@ struct easyMatrix* adjMatrix(struct easyMatrix* in, struct easyMatrix* out) {
     return out;
 }
 
-float invMatrix(struct easyMatrix *in , struct easyMatrix * out) {
+DATA_TYPE invMatrix(struct easyMatrix *in , struct easyMatrix * out) {
     adjMatrix(in,out);
-    float scale = detMatrix(in);
+    DATA_TYPE scale = detMatrix(in);
     if(scale<1e-5&&scale>-1e-5) return 0.0;
     scale = 1/scale;
     scaleMatrix(scale,out,out);
     return scale;
 }
 
-float detMatrix(struct easyMatrix* const in) {
+DATA_TYPE detMatrix(struct easyMatrix* const in) {
     uint8 x = in->rows;
     uint8 y = in->cols;
     if(x!=y) return 0;
     if(x==0 ) return 0;
     if(x==1 ) return in->element[0];
-    float *a =in->element;
+    DATA_TYPE *a =in->element;
     if(x==2) return(a[0]*a[3]-a[1]*a[2]);
-    float result = 0;
+    DATA_TYPE result = 0;
     signed char sign = 1;
     CREATE_DYNAMIC_MATRIX_ONHEAP(x-1,y-1,ret,NULL);
     for(uint8 i=0;i<x;++i) {
@@ -118,7 +118,7 @@ struct easyMatrix* subMatrix(struct easyMatrix* a, struct easyMatrix* b, struct 
     return c;
 }
 
-struct easyMatrix* scaleMatrix(float scale, struct easyMatrix* const a, struct easyMatrix* b) {
+struct easyMatrix* scaleMatrix(DATA_TYPE scale, struct easyMatrix* const a, struct easyMatrix* b) {
     int t = a->cols*a->rows;
     for (int i = 0;i<t;++i) {
         b->element[i] = a->element[i]*scale;
