@@ -59,6 +59,7 @@ struct easyMatrix* leftMatrix(uint8 x_i,uint8 y_i, struct easyMatrix* const in, 
     return out;
 }
 struct easyMatrix* adjMatrix(struct easyMatrix* const in, struct easyMatrix* out) {
+    int index = 0;
     uint8 x = in->rows;
     uint8 y = in->cols;
     CREATE_DYNAMIC_MATRIX_ONHEAP(x-1,y-1,ret,NULL);
@@ -66,10 +67,13 @@ struct easyMatrix* adjMatrix(struct easyMatrix* const in, struct easyMatrix* out
     signed char sign2 = 1;
     for(uint8 ii=0;ii<x;++ii) {
         sign2 = sign1;
+        index = ii;
         for(uint8 jj=0;jj<y;++jj) {
             leftMatrix(ii,jj,in,ret);
-            out->element[jj*y+ii] = sign2*detMatrix(ret);
+            //out->element[jj*y+ii] = sign2*detMatrix(ret);
+            out->element[index] = sign2*detMatrix(ret);
             sign2 = - sign2;    
+            index+=y;
         }
         
         sign1 = - sign1;
@@ -100,7 +104,7 @@ DATA_TYPE detMatrix(struct easyMatrix* const in) {
     CREATE_DYNAMIC_MATRIX_ONHEAP(x-1,y-1,ret,NULL);
     for(uint8 i=0;i<x;++i) {
         leftMatrix(0,i,in,ret);
-        result += sign*a[0+i]*detMatrix(ret);
+        result += sign*a[i]*detMatrix(ret);
         sign = - sign;
     }
     DELETE_DYNAMIC_MATRIX(ret);
