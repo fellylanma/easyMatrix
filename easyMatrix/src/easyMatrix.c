@@ -28,10 +28,14 @@ struct easyMatrix* copyMatrix(struct easyMatrix* const a,struct easyMatrix* c) {
 
 struct easyMatrix* transMatrix(struct easyMatrix* const a,struct easyMatrix* c) {
     int index = 0;
+    int index_src = 0;
     for(uint8 ii=0;ii<a->cols;++ii) {
+        index_src=ii;
         for(uint8 jj=0;jj<a->rows;++jj) {
-            c->element[index] = a->element[jj*a->cols+ii];
+            //c->element[index] = a->element[jj*a->cols+ii];
+            c->element[index] = a->element[index_src];
             index++;
+            index_src+=a->cols;
         }
     }
     return c;
