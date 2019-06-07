@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include "easyMatrix.h"
 
-struct easyMatrix* setMatrix(DATA_TYPE * a,struct easyMatrix* c) {
+struct easyMatrix* setMatrix(DATA_TYPE * const a,struct easyMatrix* c) {
     uint8 x = c->rows;
     uint8 y = c->cols;
     int t = x*y;
@@ -18,7 +18,7 @@ struct easyMatrix* setMatrix(DATA_TYPE * a,struct easyMatrix* c) {
     return c;
 }
 
-struct easyMatrix* copyMatrix(struct easyMatrix* a,struct easyMatrix* c) {
+struct easyMatrix* copyMatrix(struct easyMatrix* const a,struct easyMatrix* c) {
     int t = a->rows*a->cols;
     for(int i=0;i<t;++i) {
         c->element[i] = a->element[i];
@@ -26,7 +26,7 @@ struct easyMatrix* copyMatrix(struct easyMatrix* a,struct easyMatrix* c) {
     return c;
 }
 
-struct easyMatrix* transMatrix(struct easyMatrix* a,struct easyMatrix* c) {
+struct easyMatrix* transMatrix(struct easyMatrix* const a,struct easyMatrix* c) {
     int index = 0;
     for(uint8 ii=0;ii<a->cols;++ii) {
         for(uint8 jj=0;jj<a->rows;++jj) {
@@ -51,7 +51,7 @@ struct easyMatrix* leftMatrix(uint8 x_i,uint8 y_i, struct easyMatrix* const in, 
     }
     return out;
 }
-struct easyMatrix* adjMatrix(struct easyMatrix* in, struct easyMatrix* out) {
+struct easyMatrix* adjMatrix(struct easyMatrix* const in, struct easyMatrix* out) {
     uint8 x = in->rows;
     uint8 y = in->cols;
     CREATE_DYNAMIC_MATRIX_ONHEAP(x-1,y-1,ret,NULL);
@@ -71,7 +71,7 @@ struct easyMatrix* adjMatrix(struct easyMatrix* in, struct easyMatrix* out) {
     return out;
 }
 
-DATA_TYPE invMatrix(struct easyMatrix *in , struct easyMatrix * out) {
+DATA_TYPE invMatrix(struct easyMatrix *const in , struct easyMatrix * out) {
     adjMatrix(in,out);
     DATA_TYPE scale = detMatrix(in);
     if(scale<1e-5&&scale>-1e-5) return 0.0;
@@ -100,7 +100,7 @@ DATA_TYPE detMatrix(struct easyMatrix* const in) {
     return result;
 }
 
-struct easyMatrix* addMatrix(struct easyMatrix* a, struct easyMatrix* b, struct easyMatrix* c) {
+struct easyMatrix* addMatrix(struct easyMatrix* const a, struct easyMatrix* const b, struct easyMatrix* c) {
     struct easyMatrix* obj = (struct easyMatrix*)a;
     int t = obj->rows*obj->cols;
     for(int i=0;i<t;++i) {
@@ -109,7 +109,7 @@ struct easyMatrix* addMatrix(struct easyMatrix* a, struct easyMatrix* b, struct 
     return c;
 }
 
-struct easyMatrix* subMatrix(struct easyMatrix* a, struct easyMatrix* b, struct easyMatrix* c) {
+struct easyMatrix* subMatrix(struct easyMatrix* const a, struct easyMatrix* const b, struct easyMatrix* c) {
     struct easyMatrix* obj = (struct easyMatrix*)a;
     int t = obj->rows*obj->cols;
     for(int i=0;i<t;++i) {
@@ -126,7 +126,7 @@ struct easyMatrix* scaleMatrix(DATA_TYPE scale, struct easyMatrix* const a, stru
     return b;
 }
 
-struct easyMatrix* multiMatrix(struct easyMatrix* a,struct easyMatrix* b, struct easyMatrix* c) {
+struct easyMatrix* multiMatrix(struct easyMatrix* const a,struct easyMatrix* const b, struct easyMatrix* c) {
     if(NULL==c) return NULL;
     if(c == a || c == b) return NULL;
     int count = 0;
@@ -172,7 +172,7 @@ struct easyMatrix* eyesMatrix(struct easyMatrix* e) {
     return e;
 }
 
-void dumpMatrix(struct easyMatrix*e) {
+void dumpMatrix(struct easyMatrix* const e) {
     int count = 0;
     uint8 x = e->rows;
     uint8 y = e->cols;

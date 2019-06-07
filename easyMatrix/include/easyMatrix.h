@@ -37,32 +37,32 @@ struct easyMatrix {\
     DATA_TYPE* element;
 };\
 
-struct easyMatrix* setMatrix(DATA_TYPE* a,struct easyMatrix* c);
+struct easyMatrix* setMatrix(DATA_TYPE* const a,struct easyMatrix* c);
 
-struct easyMatrix* copyMatrix(struct easyMatrix* a,struct easyMatrix* c);
+struct easyMatrix* copyMatrix(struct easyMatrix* const a,struct easyMatrix* c);
 
-struct easyMatrix* transMatrix(struct easyMatrix* a,struct easyMatrix* c);
+struct easyMatrix* transMatrix(struct easyMatrix* const a,struct easyMatrix* c);
 
 DATA_TYPE detMatrix(struct easyMatrix* const a);
 
-DATA_TYPE invMatrix(struct easyMatrix* a, struct easyMatrix*b);
+DATA_TYPE invMatrix(struct easyMatrix* const a, struct easyMatrix*b);
 
 struct easyMatrix* scaleMatrix(DATA_TYPE, struct easyMatrix* const a, struct easyMatrix*);
 
-struct easyMatrix* addMatrix(struct easyMatrix* a, struct easyMatrix * b, struct easyMatrix * c);
+struct easyMatrix* addMatrix(struct easyMatrix* const a, struct easyMatrix *const  b, struct easyMatrix * c);
 
-struct easyMatrix* leftMatrix(uint8, uint8, struct easyMatrix* a, struct easyMatrix* b);
+struct easyMatrix* leftMatrix(uint8, uint8, struct easyMatrix* const a, struct easyMatrix* b);
 
-struct easyMatrix* subMatrix(struct easyMatrix* a, struct easyMatrix* b, struct easyMatrix* c);
+struct easyMatrix* subMatrix(struct easyMatrix* const a, struct easyMatrix* const  b, struct easyMatrix* c);
 
-struct easyMatrix* multiMatrix(struct easyMatrix* a, struct easyMatrix* b, struct easyMatrix* c);
+struct easyMatrix* multiMatrix(struct easyMatrix* const a, struct easyMatrix* const b, struct easyMatrix* c);
 
 struct easyMatrix* zerosMatrix(struct easyMatrix* e);
 
 struct easyMatrix* eyesMatrix(struct easyMatrix* e);
 
-void dumpMatrix(struct easyMatrix*e);
+void dumpMatrix(struct easyMatrix* const e);
 
-struct easyMatrix* adjMatrix(struct easyMatrix* a,struct easyMatrix* c);
+struct easyMatrix* adjMatrix(struct easyMatrix* const a,struct easyMatrix* c);
 
 #endif//_MAGRIDE_PLANNING_EASYMATRIX_H_
