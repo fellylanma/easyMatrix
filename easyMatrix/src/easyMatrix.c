@@ -7,10 +7,12 @@
 
 #include <stdlib.h>
 #include "easyMatrix.h"
-float* setMatrix(uint8 x, uint8 y,float* a,float * c) {
+void* setMatrix(float * a,void* c) {
+    uint8 x = easy_cast(c)->rows;
+    uint8 y = easy_cast(c)->cols;
     int t = x*y;
     for(int i=0;i<t;++i) {
-        c[i] = a[i];
+        easy_cast(c)->element[i] = a[i];
     }
     return c;
 }
@@ -171,12 +173,14 @@ void* eyesMatrix(void* e) {
     }
     return e;
 }
-void dumpMatrix(uint8 x, uint8 y, float*e) {
+void dumpMatrix(void*e) {
     int count = 0;
+    uint8 x = easy_cast(e)->rows;
+    uint8 y = easy_cast(e)->cols;
     printf("cols is:%d, rows is:%d\n",x,y);
     for(int i = 0;i<x;++i) {
         for(int j = 0;j<y;++j) {
-            printf("%8f,",e[count]);
+            printf("%8f,",easy_cast(e)->element[count]);
             ++count;
         }
         printf("\n");

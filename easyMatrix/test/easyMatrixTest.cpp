@@ -11,16 +11,6 @@ extern "C" {
 }
 #include "gtest/gtest.h"
 
-declearMatrix(3,3);
-declearMatrix(2,3);
-declearMatrix(3,2);
-declearMatrix(2,2);
-declearMatrix(4,4);
-declearMatrix(1,4);
-declearMatrix(4,1);
-declearMatrix(1,1);
-declearMatrix(7,7);
-
 float val[] = {1,2,3,4,5,6,7,8,9};
 void expect(int i, int j,float* a, float* b) {
     int t = i*j;
@@ -51,7 +41,6 @@ TEST(testCase, easyMatrixTest_SCALE) {
     CREATE_MATRIX(3,3,M1,val);
     expect(3,3,val,M0.element);
     scaleMatrix(2,&M0,&M1);
-    dumpMatrix(3,3,M1.element);
 };
 TEST(testCase, easyMatrixTest_ONES) {
     CREATE_MATRIX(3,3,M0,val);
@@ -138,8 +127,8 @@ TEST(testCase, easyMatrixTest_DET7x7) {
 
 TEST(testCase, easyMatrixTest_ADD0) {
     float val1[] = {1,3,4,5,3,2,5,6,1,2,3,4,1,2,3,4};
-    float val2[] = {1,3,4,5,3,2,5,6,1,2,3,4,1,2,3,4};
-    float val3[] = {1,3,4,5,3,2,5,6,1,2,3,4,1,2,3,4};
+    float val2[16];
+    float val3[16];
     for(int i=0;i<16;++i) val2[i] = val1[i] +1;
     for(int i=0;i<16;++i) val3[i] = 1;
     CREATE_MATRIX(4,4,M0,val1);
@@ -151,15 +140,14 @@ TEST(testCase, easyMatrixTest_ADD0) {
 }
 
 TEST(testCase, easyMatrixTest_SUB0) {
-    easyMatrix4N4 M0;
-    easyMatrix4N4 M1;
     float val1[] = {1,3,4,5,3,2,5,6,1,2,3,4,1,2,3,4};
-    float val2[] = {1,3,4,5,3,2,5,6,1,2,3,4,1,2,3,4};
-    float val3[] = {1,3,4,5,3,2,5,6,1,2,3,4,1,2,3,4};
+    float val2[16];
+    float val3[16];
     for(int i=0;i<16;++i) val2[i] = val1[i] -1;
     for(int i=0;i<16;++i) val3[i] = 1;
-    initMatrix4N4(val1,&M0);
-    initMatrix4N4(val3,&M1);
+    CREATE_MATRIX(4,4,M0,val1);
+    CREATE_MATRIX(4,4,M1,val3);
+    dumpMatrix(&M0);
     subMatrix(&M0,&M1,&M1);
 
     expect(4,4,M1.element,val2);

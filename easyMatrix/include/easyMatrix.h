@@ -11,27 +11,18 @@
 #include <stdlib.h>
 typedef unsigned char uint8;
 
-float* setMatrix(uint8 x, uint8 y,float* a,float * c);
-
-#define declearMatrix(x,y) \
-struct easyMatrix##x##N##y {\
-    uint8 rows,cols;\
-    float* element;\
-    float memory[x*y];\
-};\
-void initMatrix##x##N##y(float* a,struct easyMatrix##x##N##y* c) {\
-    c->rows = x;\
-    c->cols = y;\
-    c->element = c->memory;\
-    if(a!=NULL)\
-    setMatrix(x,y,a,c->element);\
-};
+void* setMatrix(float* a,void* c);
 
 #define easy_cast(x) ((struct easyMatrix*)x)
 
 #define CREATE_MATRIX(x,y,matrix,initval) \
-easyMatrix##x##N##y matrix;\
-initMatrix##x##N##y(initval, &matrix);
+struct easyMatrix matrix;\
+float val##x##N##y##N##matrix[x*y];\
+    matrix.rows = x;\
+    matrix.cols = y;\
+    matrix.element = val##x##N##y##N##matrix;\
+    if(initval!=NULL)\
+    setMatrix(initval, &(matrix));
 
 #define CREATE_DYNAMIC_MATRIX(x,y,matrix) \
 struct easyMatrix matrix;\
@@ -64,7 +55,7 @@ void* subMatrix(void* a, void* b, void* c);
 void* multiMatrix(void* a, void* b, void* c);
 void* zerosMatrix(void* e);
 void* eyesMatrix(void* e);
-void dumpMatrix(uint8 x, uint8 y, float*e);
+void dumpMatrix(void*e);
 
 void* adjMatrix(void* a,void* c);
 #endif//_MAGRIDE_PLANNING_EASYMATRIX_H_
