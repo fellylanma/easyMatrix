@@ -11,9 +11,7 @@
 #include <stdlib.h>
 typedef unsigned char uint8;
 
-void* setMatrix(float* a,void* c);
-
-#define easy_cast(x) ((struct easyMatrix*)x)
+struct easyMatrix* setMatrix(float* a,struct easyMatrix* c);
 
 #define CREATE_MATRIX(x,y,matrix,initval) \
 struct easyMatrix matrix;\
@@ -41,23 +39,23 @@ struct easyMatrix {\
 };\
 float* copyMatrix(uint8 x, uint8 y,float* a,float * c);
 
-void* transMatrix(void* a,void* c);
+struct easyMatrix* transMatrix(struct easyMatrix* a,struct easyMatrix* c);
 
 
 
 
-float detMatrix(void* const a);
-float invMatrix(void* a, void*b);
-void* scaleMatrix(float, void* const a, void*);
+float detMatrix(struct easyMatrix* const a);
+float invMatrix(struct easyMatrix* a, struct easyMatrix*b);
+struct easyMatrix* scaleMatrix(float, struct easyMatrix* const a, struct easyMatrix*);
 
 //float* addMatrix(uint8 x, uint8 y,float* a, float * b, float * c);
-void* addMatrix(void* a, void * b, void * c);
-void* leftMatrix(uint8, uint8, void* a, void* b);
-void* subMatrix(void* a, void* b, void* c);
-void* multiMatrix(void* a, void* b, void* c);
-void* zerosMatrix(void* e);
-void* eyesMatrix(void* e);
-void dumpMatrix(void*e);
+struct easyMatrix* addMatrix(struct easyMatrix* a, struct easyMatrix * b, struct easyMatrix * c);
+struct easyMatrix* leftMatrix(uint8, uint8, struct easyMatrix* a, struct easyMatrix* b);
+struct easyMatrix* subMatrix(struct easyMatrix* a, struct easyMatrix* b, struct easyMatrix* c);
+struct easyMatrix* multiMatrix(struct easyMatrix* a, struct easyMatrix* b, struct easyMatrix* c);
+struct easyMatrix* zerosMatrix(struct easyMatrix* e);
+struct easyMatrix* eyesMatrix(struct easyMatrix* e);
+void dumpMatrix(struct easyMatrix*e);
 
-void* adjMatrix(void* a,void* c);
+struct easyMatrix* adjMatrix(struct easyMatrix* a,struct easyMatrix* c);
 #endif//_MAGRIDE_PLANNING_EASYMATRIX_H_
