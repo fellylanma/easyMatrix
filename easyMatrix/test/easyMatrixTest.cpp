@@ -19,16 +19,25 @@ void expect(int i, int j,DATA_TYPE* a, DATA_TYPE* b) {
     }
 }
 
+void expect(struct easyMatrix* a, struct easyMatrix* b) {
+    int t = a->cols*a->rows;
+    for(int ii=0;ii<t;++ii) {
+        EXPECT_NEAR(a->element[ii],b->element[ii],1e-6);
+    }
+}
+
 void expect(int i, int j,DATA_TYPE* a, DATA_TYPE val) {
     int t = i*j;
     for(int ii=0;ii<t;++ii) {
         EXPECT_NEAR(a[ii],val,1e-6);
     }
 }
+
 TEST(testCase, easyMatrixTest_SET) {
     CREATE_MATRIX_ONSTACK(3,3,M0,val);
     expect(3,3,val,M0.element);
 };
+
 TEST(testCase, easyMatrixTest_COPY) {
     CREATE_MATRIX_ONSTACK(3,3,M0,val);
     CREATE_MATRIX_ONSTACK(3,3,M1,NULL);
@@ -43,10 +52,14 @@ TEST(testCase, easyMatrixTest_ZEROS) {
     expect(3,3,M0.element,0.0f);
 };
 TEST(testCase, easyMatrixTest_SCALE) {
+    DATA_TYPE val[] = {1,2,3,4,5,6,7,8,9};
+    DATA_TYPE val1[] = {2,4,6,8,10,12,14,16,18};
     CREATE_MATRIX_ONSTACK(3,3,M0,val);
-    CREATE_MATRIX_ONSTACK(3,3,M1,val);
+    CREATE_MATRIX_ONSTACK(3,3,M1,NULL);
     expect(3,3,val,M0.element);
     scaleMatrix(2,&M0,&M1);
+    setMatrix(val1,&M0);
+    expect(&M1,&M0);
 };
 TEST(testCase, easyMatrixTest_ONES) {
     CREATE_MATRIX_ONSTACK(3,3,M0,val);
@@ -167,6 +180,7 @@ TEST(testCase, easyMatrixTest_MUL0) {
 
     EXPECT_EQ(M2.element[0],30);
 }
+
 TEST(testCase, easyMatrixTest_MUL1) {
     DATA_TYPE val1[] = {1,2,3,4};
     DATA_TYPE val2[] = {1,2,3,4,2,4,6,8,3,6,9,12,4,8,12,16};
@@ -176,6 +190,7 @@ TEST(testCase, easyMatrixTest_MUL1) {
     multiMatrix(&M1,&M0,&M2);
     expect(4,4,M2.element,val2);
 }
+
 TEST(testCase, easyMatrixTest_LEFT) {
     DATA_TYPE val1[] = {1,2,3,4,2,4,6,8,3};
     CREATE_MATRIX_ONSTACK(3,3,M0,val1);
@@ -185,6 +200,7 @@ TEST(testCase, easyMatrixTest_LEFT) {
 
     expect(2,2,M1.element,val2);
 }
+
 TEST(testCase, easyMatrixTest_ADJ) {
     DATA_TYPE val1[] = {1,2,3,1,0,-1,0,1,1};
     DATA_TYPE val2[] = {1,1,-2,-1,1,4,1,-1,-2};
@@ -193,6 +209,7 @@ TEST(testCase, easyMatrixTest_ADJ) {
     adjMatrix(&M0,&M1);
     expect(3,3,M1.element,val2);
 }
+
 TEST(testCase, easyMatrixTest_INV) {
     DATA_TYPE val1[] = {1,2,3,1,0,-1,0,1,1};
     CREATE_MATRIX_ONSTACK(3,3,M0,val1);
@@ -205,8 +222,9 @@ TEST(testCase, easyMatrixTest_INV) {
     expect(3,3,M1.element,val2);
     multiMatrix(&M0,&M1,&M2);
     eyesMatrix(&M0);
-    expect(3,3,M0.element,M2.element);
+    expect(&M0,&M2);
 }
+
 TEST(testCase, easyMatrixTest_INV1) {
     DATA_TYPE val1[] = {1,5,3,5,5,4,3,
                     5,6,8,1,1,6,9,
@@ -222,5 +240,5 @@ TEST(testCase, easyMatrixTest_INV1) {
     invMatrix(&M0,&M1);
     multiMatrix(&M0,&M1,&M2);
     eyesMatrix(&M0);
-    expect(7,7,M0.element,M2.element);
+    expect(&M0,&M2);
 }
