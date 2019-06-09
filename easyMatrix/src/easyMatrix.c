@@ -103,6 +103,82 @@ DATA_TYPE invMatrix(struct easyMatrix *const in , struct easyMatrix * out) {
     return scale;
 }
 
+struct easyMatrix* getLUMatrix(struct easyMatrix* const A, struct easyMatrix* L,struct easyMatrix* U, struct easyMatrix* P) {
+    int row=0;
+    int N = A->cols;
+    for(int i=0;i<N;i++)
+    {
+        P->element[i]=i;
+    }
+    for(int i=0;i<N-1;i++)
+    {
+        DATA_TYPE p=0.0;
+        for(int j=i;j<N;j++)
+        {
+            if(abs(A->element[j*N+i])>p)
+            {
+                p=abs(A->element[j*N+i]);
+                row=j;
+            }
+        }
+        if(0==p) return NULL;
+        return P;
+    }
+/*
+        //交换P[i]和P[row]
+        int tmp=P[i];
+        P[i]=P[row];
+        P[row]=tmp;
+
+        double tmp2=0.0d;
+        for(int j=0;j<N;j++)
+        {
+            //交换A[i][j]和 A[row][j]
+            tmp2=A[i*N+j];
+            A[i*N+j]=A[row*N+j];
+            A[row*N+j]=tmp2;
+        }
+
+        //以下同LU分解
+        double u=A[i*N+i],l=0.0d;
+        for(int j=i+1;j<N;j++)
+        {
+            l=A[j*N+i]/u;
+            A[j*N+i]=l;
+            for(int k=i+1;k<N;k++)
+            {
+                A[j*N+k]=A[j*N+k]-A[i*N+k]*l;
+            }
+        }
+
+    }
+
+      //构造L和U
+      for(int i=0;i<N;i++)
+      {
+          for(int j=0;j<=i;j++)
+          {
+              if(i!=j)
+              {
+                  L[i*N+j]=A[i*N+j];
+              }
+              else
+              {
+                  L[i*N+j]=1;
+              }
+          }
+          for(int k=i;k<N;k++)
+          {
+              U[i*N+k]=A[i*N+k];
+          }
+      }
+
+ }
+ return eye;
+ */
+}
+
+
 DATA_TYPE detMatrix(struct easyMatrix* const in) {
     uint8 x = in->rows;
     uint8 y = in->cols;
