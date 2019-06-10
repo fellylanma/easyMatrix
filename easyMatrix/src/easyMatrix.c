@@ -103,7 +103,7 @@ DATA_TYPE invMatrix(struct easyMatrix *const in , struct easyMatrix * out) {
     return scale;
 }
 
-struct easyMatrix* getLUMatrix(struct easyMatrix* const A, struct easyMatrix* L,struct easyMatrix* U, struct easyMatrix* P) {
+struct easyMatrix* getLUMatrix(struct easyMatrix* const A, struct easyMatrix* L,struct easyMatrix* U) {
     int row=0;
     int N = A->cols;
     for(int i=0;i<N;i++)
