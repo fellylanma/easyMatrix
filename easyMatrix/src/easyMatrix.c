@@ -105,25 +105,34 @@ DATA_TYPE invMatrix(struct easyMatrix *const in , struct easyMatrix * out) {
 
 struct easyMatrix* getLUMatrix(struct easyMatrix* const A, struct easyMatrix* L,struct easyMatrix* U) {
     int row=0;
-    int N = A->cols;
-    for(int i=0;i<N;i++)
-    {
-        P->element[i]=i;
+    DATA_TYPE s = 0;
+    uint8 N = A->cols;
+    int t = N*N;
+    for(int i =0;i<t;i++) {
+        L->element[i] = 1e-9;
+        U->element[i] = 1e-9;
     }
-    for(int i=0;i<N-1;i++)
-    {
-        DATA_TYPE p=0.0;
-        for(int j=i;j<N;j++)
-        {
-            if(abs(A->element[j*N+i])>p)
-            {
-                p=abs(A->element[j*N+i]);
-                row=j;
+    for(int i=0;i<N;i++) {
+        L->element[i*N+i] = 1.0;
+    }
+    for(int i=0;i<N;i++) {
+        for(int j=i;j<N;j++) {
+            s = 0.0;
+            for(int k=0;k<i;++k) {
+                s+=L->element[i*N+k]*U->element[k*N+j];
             }
+            U->element[i*N+j]= A->element[i*N+j] - s; 
         }
-        if(0==p) return NULL;
-        return P;
+        for (int j = i + 1;j < N;j++) {
+            s = 0.0;
+            for (int k = 0; k < i; k++)
+            {
+                s += L->element[j*N+k] * U->element[k*N+i];
+            }
+            L->element[j*N+i] = (A->element[j*N+i] - s) / U->element[i*N+i];      //按列计算l值
+        }
     }
+    return L;
 /*
         //交换P[i]和P[row]
         int tmp=P[i];

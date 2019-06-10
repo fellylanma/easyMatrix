@@ -242,3 +242,14 @@ TEST(testCase, easyMatrixTest_INV1) {
     eyesMatrix(&M0);
     expect(&M0,&M2);
 }
+
+TEST(testCase, easyMatrixTest_LU) {
+    DATA_TYPE val1[] = {1,2,3,1,0,-1,0,1,1};
+    CREATE_MATRIX_ONSTACK(3,3,M0,val1);
+    CREATE_MATRIX_ONSTACK(3,3,M1,NULL);
+    CREATE_MATRIX_ONSTACK(3,3,L,NULL);
+    CREATE_MATRIX_ONSTACK(3,3,U,NULL);
+    getLUMatrix(&M0,&L,&U);
+    multiMatrix(&L,&U,&M1);
+    expect(&M0,&M1);
+}
