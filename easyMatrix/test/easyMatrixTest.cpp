@@ -253,3 +253,50 @@ TEST(testCase, easyMatrixTest_LU) {
     multiMatrix(&L,&U,&M1);
     expect(&M0,&M1);
 }
+
+TEST(testCase, easyMatrixTest_LINV) {
+    DATA_TYPE val1[] = {1,2,3,1,0,-1,0,1,1};
+    CREATE_MATRIX_ONSTACK(3,3,M0,val1);
+    CREATE_MATRIX_ONSTACK(3,3,M1,NULL);
+    CREATE_MATRIX_ONSTACK(3,3,L,NULL);
+    CREATE_MATRIX_ONSTACK(3,3,U,NULL);
+    CREATE_MATRIX_ONSTACK(3,3,LINV,NULL);
+    getLUMatrix(&M0,&L,&U);
+    invLMatrix(&L,&LINV);
+    multiMatrix(&L,&LINV,&M1);
+    eyesMatrix(&L);
+    expect(&L,&M1);
+}
+
+TEST(testCase, easyMatrixTest_UINV) {
+    DATA_TYPE val1[] = {1,2,3,1,0,-1,0,1,1};
+    CREATE_MATRIX_ONSTACK(3,3,M0,val1);
+    CREATE_MATRIX_ONSTACK(3,3,M1,NULL);
+    CREATE_MATRIX_ONSTACK(3,3,L,NULL);
+    CREATE_MATRIX_ONSTACK(3,3,U,NULL);
+    CREATE_MATRIX_ONSTACK(3,3,UINV,NULL);
+    getLUMatrix(&M0,&L,&U);
+    invUMatrix(&U,&UINV);
+    multiMatrix(&U,&UINV,&M1);
+    eyesMatrix(&M0);
+    expect(&M0,&M1);
+}
+
+TEST(testCase, easyMatrixTest_LUINV) {
+    DATA_TYPE val1[] = {1,2,3,1,0,-1,0,1,1};
+    CREATE_MATRIX_ONSTACK(3,3,M0,val1);
+    CREATE_MATRIX_ONSTACK(3,3,M1,NULL);
+    CREATE_MATRIX_ONSTACK(3,3,M2,NULL);
+    CREATE_MATRIX_ONSTACK(3,3,L,NULL);
+    CREATE_MATRIX_ONSTACK(3,3,LINV,NULL);
+    CREATE_MATRIX_ONSTACK(3,3,U,NULL);
+    CREATE_MATRIX_ONSTACK(3,3,UINV,NULL);
+    getLUMatrix(&M0,&L,&U);
+    invUMatrix(&U,&UINV);
+    invUMatrix(&L,&LINV);
+    multiMatrix(&UINV,&LINV,&M1);
+    multiMatrix(&M1,&M0,&M2);
+    dumpMatrix(&M2);
+    eyesMatrix(&M0);
+    expect(&M0,&M2);
+}

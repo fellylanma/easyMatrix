@@ -187,7 +187,51 @@ struct easyMatrix* getLUMatrix(struct easyMatrix* const A, struct easyMatrix* L,
  */
 }
 
-
+struct easyMatrix* invLMatrix(struct easyMatrix* const L, struct easyMatrix* L_inv) { 
+    uint8 N = L->cols;
+    DATA_TYPE s;
+    int t = N*N;
+    for(int i =0;i<t;i++) {
+        L_inv->element[i] = 1e-9;
+    }
+    for (uint8 i = 0;i < N;i++)  {
+        L_inv->element[i*N+i] = 1;
+    }
+    for (uint8 i= 1;i < N;i++) {
+        for (uint8 j = 0;j < i;j++) {
+            s = 0;
+            for (uint8 k = 0;k < i;k++) {
+                s += L->element[i*N+k] * L_inv->element[k*N+j];
+            }
+            L_inv->element[i*N+j] = -s;
+        }
+    }
+    return L_inv;
+}
+struct easyMatrix* invUMatrix(struct easyMatrix* const U, struct easyMatrix* U_inv) { 
+    uint8 N = U->cols;
+    DATA_TYPE s;
+    int t = N*N;
+    for(int i =0;i<t;i++) {
+        U_inv->element[i] = 1e-9;
+    }
+ for (uint8 i = 0;i < N;i++)                    //按列序，列内按照从下到上，计算u的逆矩阵
+    {
+        U_inv->element[i*N+i] = 1 / U->element[i*N+i];
+    }
+    for (uint8 i = 1;i < N;i++) {
+        for (int j = i - 1;j >=0;j--) {
+                printf("j:%d\n",j);
+            s = 0;
+            for (uint8 k = j + 1;k <= i;k++) {
+                printf("K:%d\n",k);
+                s += U->element[j*N+k] * U_inv->element[k*N+i];
+            }
+            U_inv->element[j*N+i] = -s / U->element[j*N+j];
+        }
+    }
+    return U_inv;
+}
 DATA_TYPE detMatrix(struct easyMatrix* const in) {
     uint8 x = in->rows;
     uint8 y = in->cols;

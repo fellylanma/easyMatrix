@@ -66,4 +66,8 @@ void dumpMatrix(struct easyMatrix* const e);
 struct easyMatrix* adjMatrix(struct easyMatrix* const a,struct easyMatrix* c);
 
 struct easyMatrix* getLUMatrix(struct easyMatrix* const A, struct easyMatrix* L,struct easyMatrix* U) ;
+
+struct easyMatrix* invLMatrix(struct easyMatrix* const L, struct easyMatrix* L_inv) ;
+
+struct easyMatrix* invUMatrix(struct easyMatrix* const U, struct easyMatrix* U_inv) ;
 #endif//_MAGRIDE_PLANNING_EASYMATRIX_H_
