@@ -221,10 +221,8 @@ struct easyMatrix* invUMatrix(struct easyMatrix* const U, struct easyMatrix* U_i
     }
     for (uint8 i = 1;i < N;i++) {
         for (int j = i - 1;j >=0;j--) {
-                printf("j:%d\n",j);
             s = 0;
             for (uint8 k = j + 1;k <= i;k++) {
-                printf("K:%d\n",k);
                 s += U->element[j*N+k] * U_inv->element[k*N+i];
             }
             U_inv->element[j*N+i] = -s / U->element[j*N+j];

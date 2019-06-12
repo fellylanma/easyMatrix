@@ -293,7 +293,7 @@ TEST(testCase, easyMatrixTest_LUINV) {
     CREATE_MATRIX_ONSTACK(3,3,UINV,NULL);
     getLUMatrix(&M0,&L,&U);
     invUMatrix(&U,&UINV);
-    invUMatrix(&L,&LINV);
+    invLMatrix(&L,&LINV);
     multiMatrix(&UINV,&LINV,&M1);
     multiMatrix(&M1,&M0,&M2);
     dumpMatrix(&M2);
