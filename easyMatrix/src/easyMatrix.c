@@ -95,12 +95,27 @@ DATA_TYPE invMatrix(struct easyMatrix *const in , struct easyMatrix * out) {
     if(in->cols!=in->rows) return 0;
     if(in->rows != out->cols) return 0;
     if(in->cols != out->rows) return 0;
+    uint8 N = in->cols;
+    CREATE_DYNAMIC_MATRIX_ONHEAP(N,N,L,NULL);
+    CREATE_DYNAMIC_MATRIX_ONHEAP(N,N,LINV,NULL);
+    CREATE_DYNAMIC_MATRIX_ONHEAP(N,N,U,NULL);
+    CREATE_DYNAMIC_MATRIX_ONHEAP(N,N,UINV,NULL);
+    getLUMatrix(in,L,U);
+    invLMatrix(L,LINV);
+    invUMatrix(U,UINV);
+    multiMatrix(UINV,LINV,out);
+    /*
     adjMatrix(in,out);
     DATA_TYPE scale = detMatrix(in);
     if(scale<1e-5&&scale>-1e-5) return 0.0;
     scale = 1/scale;
     scaleMatrix(scale,out,out);
-    return scale;
+*/
+    DELETE_DYNAMIC_MATRIX(L);
+    DELETE_DYNAMIC_MATRIX(U);
+    DELETE_DYNAMIC_MATRIX(LINV);
+    DELETE_DYNAMIC_MATRIX(UINV);
+    return 0;
 }
 
 struct easyMatrix* getLUMatrix(struct easyMatrix* const A, struct easyMatrix* L,struct easyMatrix* U) {
@@ -109,8 +124,8 @@ struct easyMatrix* getLUMatrix(struct easyMatrix* const A, struct easyMatrix* L,
     uint8 N = A->cols;
     int t = N*N;
     for(int i =0;i<t;i++) {
-        L->element[i] = 1e-9;
-        U->element[i] = 1e-9;
+        L->element[i] = 1e-13;
+        U->element[i] = 1e-13;
     }
     for(int i=0;i<N;i++) {
         L->element[i*N+i] = 1.0;
@@ -192,7 +207,7 @@ struct easyMatrix* invLMatrix(struct easyMatrix* const L, struct easyMatrix* L_i
     DATA_TYPE s;
     int t = N*N;
     for(int i =0;i<t;i++) {
-        L_inv->element[i] = 1e-9;
+        L_inv->element[i] = 1e-13;
     }
     for (uint8 i = 0;i < N;i++)  {
         L_inv->element[i*N+i] = 1;
@@ -213,7 +228,7 @@ struct easyMatrix* invUMatrix(struct easyMatrix* const U, struct easyMatrix* U_i
     DATA_TYPE s;
     int t = N*N;
     for(int i =0;i<t;i++) {
-        U_inv->element[i] = 1e-9;
+        U_inv->element[i] = 1e-13;
     }
  for (uint8 i = 0;i < N;i++)                    //按列序，列内按照从下到上，计算u的逆矩阵
     {

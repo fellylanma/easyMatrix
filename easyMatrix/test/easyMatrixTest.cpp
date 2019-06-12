@@ -15,21 +15,21 @@ DATA_TYPE val[] = {1,2,3,4,5,6,7,8,9};
 void expect(int i, int j,DATA_TYPE* a, DATA_TYPE* b) {
     int t = i*j;
     for(int ii=0;ii<t;++ii) {
-        EXPECT_NEAR(a[ii],b[ii],1e-6);
+        EXPECT_NEAR(a[ii],b[ii],1e-5);
     }
 }
 
 void expect(struct easyMatrix* a, struct easyMatrix* b) {
     int t = a->cols*a->rows;
     for(int ii=0;ii<t;++ii) {
-        EXPECT_NEAR(a->element[ii],b->element[ii],1e-6);
+        EXPECT_NEAR(a->element[ii],b->element[ii],1e-5);
     }
 }
 
 void expect(int i, int j,DATA_TYPE* a, DATA_TYPE val) {
     int t = i*j;
     for(int ii=0;ii<t;++ii) {
-        EXPECT_NEAR(a[ii],val,1e-6);
+        EXPECT_NEAR(a[ii],val,1e-5);
     }
 }
 
@@ -240,6 +240,7 @@ TEST(testCase, easyMatrixTest_INV1) {
     invMatrix(&M0,&M1);
     multiMatrix(&M0,&M1,&M2);
     eyesMatrix(&M0);
+    dumpMatrix(&M2);
     expect(&M0,&M2);
 }
 
