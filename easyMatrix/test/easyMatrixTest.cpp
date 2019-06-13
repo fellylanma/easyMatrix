@@ -144,6 +144,66 @@ TEST(testCase, easyMatrixTest_DET7x7) {
     EXPECT_NEAR(result,-108006.0,1e-6);
 }
 
+TEST(testCase, easyMatrixTest_FDET) {
+    CREATE_MATRIX_ONSTACK(3,3,M0,val);
+    DATA_TYPE result = fastDetMatrix(&M0);
+    EXPECT_EQ(result,0);
+}
+TEST(testCase, easyMatrixTest_FDET1) {
+    DATA_TYPE val1[] = {1,3,4,5,6,7,2,3,5};
+    CREATE_MATRIX_ONSTACK(3,3,M0,val1);
+    DATA_TYPE result = fastDetMatrix(&M0);
+    EXPECT_NEAR(result,-12.0,1e-5);
+}
+
+TEST(testCase, easyMatrixTest_FDET2) {
+    DATA_TYPE val1[] = {1,3,4,5};
+    CREATE_MATRIX_ONSTACK(2,2,M0,val1);
+    DATA_TYPE result = fastDetMatrix(&M0);
+    EXPECT_EQ(result,-7);
+}
+TEST(testCase, easyMatrixTest_FDET3) {
+    DATA_TYPE val1[] = {1,2,3,4,
+                    0,1,2,3,
+                    0,0,1,2,
+                    0,0,0,1};
+    CREATE_MATRIX_ONSTACK(4,4,M0,val1);
+    DATA_TYPE result = fastDetMatrix(&M0);
+    EXPECT_EQ(result,1);
+}
+
+TEST(testCase, easyMatrixTest_FDET4) {
+    DATA_TYPE val1[] = {1,2,3,
+                    0,1,2,
+                    0,0,1};
+    CREATE_MATRIX_ONSTACK(3,3,M0,val1);
+    DATA_TYPE result = fastDetMatrix(&M0);
+    EXPECT_EQ(result,1);
+}
+
+TEST(testCase, easyMatrixTest_FDET5) {
+    DATA_TYPE val1[] = {1,5,3,5,
+                    5,6,8,1,
+                    9,8,3,1,
+                    4,3,2,7 };
+    CREATE_MATRIX_ONSTACK(4,4,M0,val1);
+    DATA_TYPE result = fastDetMatrix(&M0);
+    EXPECT_NEAR(result,1475.0,1e-2);
+}
+
+TEST(testCase, easyMatrixTest_FDET7x7) {
+    DATA_TYPE val1[] = {1,5,3,5,5,4,3,
+                    5,6,8,1,1,6,9,
+                    9,8,3,1,2,6,3,
+                    4,3,2,7,3,4,5,
+                    2,5,7,2,3,5,8,
+                    1,2,5,3,7,9,3,
+                    9,5,7,9,3,1,5
+                    };
+    CREATE_MATRIX_ONSTACK(7,7,M0,val1);
+    DATA_TYPE result = fastDetMatrix(&M0);
+    EXPECT_NEAR(result,-108006.0,1e-1);
+}
 TEST(testCase, easyMatrixTest_ADD0) {
     DATA_TYPE val1[] = {1,3,4,5,3,2,5,6,1,2,3,4,1,2,3,4};
     DATA_TYPE val2[16];
