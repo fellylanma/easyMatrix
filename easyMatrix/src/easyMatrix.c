@@ -124,8 +124,8 @@ struct easyMatrix* getLUMatrix(struct easyMatrix* const A, struct easyMatrix* L,
     uint8 N = A->cols;
     int t = N*N;
     for(int i =0;i<t;i++) {
-        L->element[i] = 1e-13;
-        U->element[i] = 1e-13;
+        L->element[i] = 1e-20;
+        U->element[i] = 1e-20;
     }
     for(int i=0;i<N;i++) {
         L->element[i*N+i] = 1.0;
@@ -245,6 +245,26 @@ struct easyMatrix* invUMatrix(struct easyMatrix* const U, struct easyMatrix* U_i
     }
     return U_inv;
 }
+DATA_TYPE fastDetMatrix(struct easyMatrix* const in) {
+    uint8 x = in->rows;
+    uint8 y = in->cols;
+    if(x!=y) return 0;
+    if(x==0 ) return 0;
+    if(x==1 ) return in->element[0];
+    DATA_TYPE *a =in->element;
+    if(x==2) return(a[0]*a[3]-a[1]*a[2]);
+    int N = x;
+    CREATE_DYNAMIC_MATRIX_ONHEAP(N,N,L,NULL);
+    CREATE_DYNAMIC_MATRIX_ONHEAP(N,N,U,NULL);
+    getLUMatrix(in,L,U);
+    double s = 1;
+    for(int i = 0;i<N;i++) 
+        s *= U->element[i*N+i];
+    DELETE_DYNAMIC_MATRIX(L);
+    DELETE_DYNAMIC_MATRIX(U);
+    return s;
+}
+
 DATA_TYPE detMatrix(struct easyMatrix* const in) {
     uint8 x = in->rows;
     uint8 y = in->cols;
@@ -253,6 +273,7 @@ DATA_TYPE detMatrix(struct easyMatrix* const in) {
     if(x==1 ) return in->element[0];
     DATA_TYPE *a =in->element;
     if(x==2) return(a[0]*a[3]-a[1]*a[2]);
+
     DATA_TYPE result = 0;
     signed char sign = 1;
     CREATE_DYNAMIC_MATRIX_ONHEAP(x-1,y-1,ret,NULL);

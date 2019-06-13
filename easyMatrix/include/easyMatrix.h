@@ -70,4 +70,6 @@ struct easyMatrix* getLUMatrix(struct easyMatrix* const A, struct easyMatrix* L,
 struct easyMatrix* invLMatrix(struct easyMatrix* const L, struct easyMatrix* L_inv) ;
 
 struct easyMatrix* invUMatrix(struct easyMatrix* const U, struct easyMatrix* U_inv) ;
+
+DATA_TYPE fastDetMatrix(struct easyMatrix* const in) ;
 #endif//_MAGRIDE_PLANNING_EASYMATRIX_H_

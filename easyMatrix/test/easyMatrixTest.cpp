@@ -92,7 +92,7 @@ TEST(testCase, easyMatrixTest_DET1) {
     DATA_TYPE val1[] = {1,3,4,5,6,7,2,3,5};
     CREATE_MATRIX_ONSTACK(3,3,M0,val1);
     DATA_TYPE result = detMatrix(&M0);
-    EXPECT_EQ(result,-12);
+    EXPECT_NEAR(result,-12.0,1e-6);
 }
 
 TEST(testCase, easyMatrixTest_DET2) {
@@ -127,7 +127,7 @@ TEST(testCase, easyMatrixTest_DET5) {
                     4,3,2,7 };
     CREATE_MATRIX_ONSTACK(4,4,M0,val1);
     DATA_TYPE result = detMatrix(&M0);
-    EXPECT_EQ(result,1475);
+    EXPECT_NEAR(result,1475.0,1e-6);
 }
 
 TEST(testCase, easyMatrixTest_DET7x7) {
@@ -141,7 +141,7 @@ TEST(testCase, easyMatrixTest_DET7x7) {
                     };
     CREATE_MATRIX_ONSTACK(7,7,M0,val1);
     DATA_TYPE result = detMatrix(&M0);
-    EXPECT_EQ(result,-108006);
+    EXPECT_NEAR(result,-108006.0,1e-6);
 }
 
 TEST(testCase, easyMatrixTest_ADD0) {
@@ -240,7 +240,6 @@ TEST(testCase, easyMatrixTest_INV1) {
     invMatrix(&M0,&M1);
     multiMatrix(&M0,&M1,&M2);
     eyesMatrix(&M0);
-    dumpMatrix(&M2);
     expect(&M0,&M2);
 }
 
@@ -297,7 +296,8 @@ TEST(testCase, easyMatrixTest_LUINV) {
     invLMatrix(&L,&LINV);
     multiMatrix(&UINV,&LINV,&M1);
     multiMatrix(&M1,&M0,&M2);
-    dumpMatrix(&M2);
     eyesMatrix(&M0);
     expect(&M0,&M2);
 }
+
+
