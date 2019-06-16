@@ -303,6 +303,19 @@ TEST(testCase, easyMatrixTest_INV1) {
     expect(&M0,&M2);
 }
 
+TEST(testCase, easyMatrixTest_INV2) {
+    DATA_TYPE val1[] = {1,2,3,1,2,3,0,1,1};
+    CREATE_MATRIX_ONSTACK(3,3,M0,val1);
+    CREATE_MATRIX_ONSTACK(3,3,M1,NULL);
+    CREATE_MATRIX_ONSTACK(3,3,M2,NULL);
+    EXPECT_NEAR(invMatrix(&M0,&M1),0.0,1e-6);
+    /*
+    multiMatrix(&M0,&M1,&M2);
+    eyesMatrix(&M0);
+    expect(&M0,&M2);
+    */
+}
+
 TEST(testCase, easyMatrixTest_LU) {
     DATA_TYPE val1[] = {1,2,3,1,0,-1,0,1,1};
     CREATE_MATRIX_ONSTACK(3,3,M0,val1);

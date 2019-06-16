@@ -6,8 +6,12 @@
  ************************************************************************/
 
 #include <stdlib.h>
+#include <float.h>
 #include "easyMatrix.h"
 
+int isFiniteNumber(double d) {
+    return (d<=DBL_MAX&&d>=-DBL_MAX);
+}
 struct easyMatrix* setMatrix(DATA_TYPE * const a,struct easyMatrix* c) {
     uint8 x = c->rows;
     uint8 y = c->cols;
@@ -104,6 +108,10 @@ DATA_TYPE invMatrix(struct easyMatrix *const in , struct easyMatrix * out) {
     invLMatrix(L,LINV);
     invUMatrix(U,UINV);
     multiMatrix(UINV,LINV,out);
+    double s = 1;
+    for(int i = 0;i<N;i++) 
+        s *= U->element[i*N+i];
+    return isFiniteNumber(s);
     /*
     adjMatrix(in,out);
     DATA_TYPE scale = detMatrix(in);
@@ -115,7 +123,7 @@ DATA_TYPE invMatrix(struct easyMatrix *const in , struct easyMatrix * out) {
     DELETE_DYNAMIC_MATRIX(U);
     DELETE_DYNAMIC_MATRIX(LINV);
     DELETE_DYNAMIC_MATRIX(UINV);
-    return 0;
+    return s;
 }
 
 struct easyMatrix* getLUMatrix(struct easyMatrix* const A, struct easyMatrix* L,struct easyMatrix* U) {
@@ -361,6 +369,10 @@ struct easyMatrix* eyesMatrix(struct easyMatrix* e) {
     return e;
 }
 
+struct easyMatrix* solveEquationMatrix(const struct easyMatrix* const A,const struct easyMatrix* const Y, struct easyMatrix* X) { 
+     
+    return X;
+}
 void dumpMatrix(struct easyMatrix* const e) {
     int count = 0;
     int x = e->rows;

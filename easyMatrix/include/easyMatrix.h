@@ -70,7 +70,7 @@ struct easyMatrix* getLUMatrix(struct easyMatrix* const A, struct easyMatrix* L,
 struct easyMatrix* invLMatrix(struct easyMatrix* const L, struct easyMatrix* L_inv) ;
 struct easyMatrix* invUMatrix(struct easyMatrix* const U, struct easyMatrix* U_inv) ;
 
-struct easyMatrix* solveEquationMatrix(struct easyMatrix* const A, struct easyMatrix* const Y, struct easyMatrix* X) ;
+struct easyMatrix* solveEquationMatrix(const struct easyMatrix* const A,const struct easyMatrix* const Y, struct easyMatrix* X) ;
 
 
 DATA_TYPE fastDetMatrix(struct easyMatrix* const in) ;
