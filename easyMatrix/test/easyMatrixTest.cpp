@@ -373,4 +373,17 @@ TEST(testCase, easyMatrixTest_LUINV) {
     expect(&M0,&M2);
 }
 
+TEST(testCase, easyMatrixTest_SOLVE) {
+    DATA_TYPE val1[] = {1,2,3,1,0,-1,0,1,1};
+    DATA_TYPE val2[] = {3,4,5};
+    CREATE_MATRIX_ONSTACK(3,3,A,val1);
+    CREATE_MATRIX_ONSTACK(3,1,Y,val2);
+    CREATE_MATRIX_ONSTACK(3,1,X,NULL);
+    CREATE_MATRIX_ONSTACK(3,1,T,NULL);
+    solveEquationMatrix(&A,&Y,&X);
+    dumpMatrix(&X);
+    multiMatrix(&A,&X,&T);
+    expect(&T,&Y);
+}
+
 

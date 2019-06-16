@@ -370,7 +370,10 @@ struct easyMatrix* eyesMatrix(struct easyMatrix* e) {
 }
 
 struct easyMatrix* solveEquationMatrix(const struct easyMatrix* const A,const struct easyMatrix* const Y, struct easyMatrix* X) { 
-     
+    CREATE_DYNAMIC_MATRIX_ONHEAP(A->rows,A->cols,AINV,NULL);
+    invMatrix(A,AINV);
+    multiMatrix(AINV,Y,X);
+    DELETE_DYNAMIC_MATRIX(AINV);
     return X;
 }
 void dumpMatrix(struct easyMatrix* const e) {
