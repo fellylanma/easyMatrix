@@ -49,7 +49,7 @@ DATA_TYPE invMatrix(struct easyMatrix* const a, struct easyMatrix*b);
 
 struct easyMatrix* scaleMatrix(DATA_TYPE, struct easyMatrix* const a, struct easyMatrix*);
 
-struct easyMatrix* addMatrix(struct easyMatrix* const a, struct easyMatrix *const  b, struct easyMatrix * c);
+struct easyMatrix* addMatrix(const struct easyMatrix* const a, const struct easyMatrix *const  b, struct easyMatrix * c);
 
 struct easyMatrix* leftMatrix(uint8, uint8, struct easyMatrix* const a, struct easyMatrix* b);
 
@@ -68,8 +68,10 @@ struct easyMatrix* adjMatrix(struct easyMatrix* const a,struct easyMatrix* c);
 struct easyMatrix* getLUMatrix(struct easyMatrix* const A, struct easyMatrix* L,struct easyMatrix* U) ;
 
 struct easyMatrix* invLMatrix(struct easyMatrix* const L, struct easyMatrix* L_inv) ;
-
 struct easyMatrix* invUMatrix(struct easyMatrix* const U, struct easyMatrix* U_inv) ;
+
+struct easyMatrix* solveEquationMatrix(struct easyMatrix* const A, struct easyMatrix* const Y, struct easyMatrix* X) ;
+
 
 DATA_TYPE fastDetMatrix(struct easyMatrix* const in) ;
 #endif//_MAGRIDE_PLANNING_EASYMATRIX_H_

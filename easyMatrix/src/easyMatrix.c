@@ -286,7 +286,7 @@ DATA_TYPE detMatrix(struct easyMatrix* const in) {
     return result;
 }
 
-struct easyMatrix* addMatrix(struct easyMatrix* const a, struct easyMatrix* const b, struct easyMatrix* c) {
+struct easyMatrix* addMatrix(const struct easyMatrix* const a,const struct easyMatrix* const b, struct easyMatrix* c) {
     if(a->cols != b->cols) return NULL;
     if(a->rows != b->rows) return NULL;
     struct easyMatrix* obj = (struct easyMatrix*)a;
