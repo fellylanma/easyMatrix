@@ -111,7 +111,6 @@ DATA_TYPE invMatrix(struct easyMatrix *const in , struct easyMatrix * out) {
     double s = 1;
     for(int i = 0;i<N;i++) 
         s *= U->element[i*N+i];
-    return isFiniteNumber(s);
     /*
     adjMatrix(in,out);
     DATA_TYPE scale = detMatrix(in);
@@ -123,7 +122,7 @@ DATA_TYPE invMatrix(struct easyMatrix *const in , struct easyMatrix * out) {
     DELETE_DYNAMIC_MATRIX(U);
     DELETE_DYNAMIC_MATRIX(LINV);
     DELETE_DYNAMIC_MATRIX(UINV);
-    return s;
+    return isFiniteNumber(s);
 }
 
 struct easyMatrix* getLUMatrix(struct easyMatrix* const A, struct easyMatrix* L,struct easyMatrix* U) {
