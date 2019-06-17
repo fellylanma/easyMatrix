@@ -7,7 +7,7 @@ If you can not use other libraries in C++ such as Eigen, easyMatrix is your best
 easyMatrix is really easy and small . You can configure the data type for the matrix. 
 8-bit data such as cols and rows number is used instead of 32-bit integer.
 
-#How to use
+# How to use
 
 
  	float val1[] = {1,2,3,4,5,6,7,8,9};
