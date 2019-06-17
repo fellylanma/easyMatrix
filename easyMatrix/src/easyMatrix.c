@@ -96,9 +96,14 @@ struct easyMatrix* adjMatrix(struct easyMatrix* const in, struct easyMatrix* out
 }
 
 DATA_TYPE invMatrix(struct easyMatrix *const in , struct easyMatrix * out) {
-    if(in->cols!=in->rows) return 0;
-    if(in->rows != out->cols) return 0;
-    if(in->cols != out->rows) return 0;
+    if(in->cols!=in->rows) {
+        printf("ERROR:invMatrix cols and rows not equal!\n");
+        return 0;
+    };
+    if(in->rows != out->cols||in->cols != out->rows) {
+        printf("ERROR:input matrix and output matrix does not match!\n");
+        return 0;
+    };
     uint8 N = in->cols;
     CREATE_DYNAMIC_MATRIX_ONHEAP(N,N,L,NULL);
     CREATE_DYNAMIC_MATRIX_ONHEAP(N,N,LINV,NULL);
@@ -211,6 +216,10 @@ struct easyMatrix* getLUMatrix(struct easyMatrix* const A, struct easyMatrix* L,
 
 struct easyMatrix* invLMatrix(struct easyMatrix* const L, struct easyMatrix* L_inv) { 
     uint8 N = L->cols;
+    if(N!=L->rows) {
+        printf("L matrix is not a sqare matrix!\n");
+        return NULL;
+    }
     DATA_TYPE s;
     int t = N*N;
     for(int i =0;i<t;i++) {

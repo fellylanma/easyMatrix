@@ -381,7 +381,7 @@ TEST(testCase, easyMatrixTest_SOLVE) {
     CREATE_MATRIX_ONSTACK(3,1,X,NULL);
     CREATE_MATRIX_ONSTACK(3,1,T,NULL);
     solveEquationMatrix(&A,&Y,&X);
-    dumpMatrix(&X);
+    //dumpMatrix(&X);
     multiMatrix(&A,&X,&T);
     expect(&T,&Y);
 }
