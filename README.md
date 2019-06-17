@@ -9,7 +9,7 @@ easyMatrix is really easy and small . You can configure the data type for the ma
 
 #How to use
 
-//create matrix on stack
+
  	float val1[] = {1,2,3,4,5,6,7,8,9};
 	float val2[] = {1,1,1,1,1,1,1,1,1};
 	CREATE_MATRIX_ONSTACK(3,3,A,val1);
@@ -31,8 +31,4 @@ easyMatrix is really easy and small . You can configure the data type for the ma
 	DELETE_DYNAMIC_MATRIX(D);
 	DELETE_DYNAMIC_MATRIX(E);
 	DELETE_DYNAMIC_MATRIX(F);
---------------------- 
-作者：腾TO的技术输出 
-来源：CSDN 
-原文：https://blog.csdn.net/weixin_43870191/article/details/92417340 
-版权声明：本文为博主原创文章，转载请附上博文链接！
+
