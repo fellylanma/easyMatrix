@@ -284,8 +284,14 @@ DATA_TYPE fastDetMatrix(struct easyMatrix* const in) {
 DATA_TYPE detMatrix(struct easyMatrix* const in) {
     uint8 x = in->rows;
     uint8 y = in->cols;
-    if(x!=y) return 0;
-    if(x==0 ) return 0;
+    if(x!=y) {
+        printf("ERROR:Det Matrix input is not sqare matrix!");
+        return 0;
+    }
+    if(x==0 ) {
+        printf("ERROR:Det Matrix input is zero!");
+        return 0;
+    }
     if(x==1 ) return in->element[0];
     DATA_TYPE *a =in->element;
     if(x==2) return(a[0]*a[3]-a[1]*a[2]);
