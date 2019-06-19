@@ -1,9 +1,9 @@
 /*************************************************************************
-	> File Name: easyMatrix.c
-	> Author: Zhang Yuteng
-	> Mail:
-	> Created Time: 2019年05月23日 星期四 21时57分31秒
- ************************************************************************/
+> File Name: easyMatrix.c
+> Author: Zhang Yuteng
+> Mail:
+> Created Time: 2019年05月23日 星期四 21时57分31秒
+************************************************************************/
 
 #include <stdlib.h>
 #include <float.h>
@@ -22,7 +22,8 @@ struct easyMatrix* setMatrix(DATA_TYPE * const a,struct easyMatrix* c) {
     return c;
 }
 
-struct easyMatrix* copyMatrix(struct easyMatrix* const a,struct easyMatrix* c) {
+struct easyMatrix* copyMatrix(struct easyMatrix* const a,
+                              struct easyMatrix* c) {
     if(a->rows != c->rows) return NULL;
     if(a->cols != c->cols) return NULL;
     int t = a->rows*a->cols;
@@ -32,7 +33,8 @@ struct easyMatrix* copyMatrix(struct easyMatrix* const a,struct easyMatrix* c) {
     return c;
 }
 
-struct easyMatrix* transMatrix(struct easyMatrix* const a,struct easyMatrix* c) {
+struct easyMatrix* transMatrix(struct easyMatrix* const a,
+                               struct easyMatrix* c) {
     if(a->rows != c->cols) return NULL;
     if(a->cols != c->rows) return NULL;
     int index = 0;
@@ -49,7 +51,8 @@ struct easyMatrix* transMatrix(struct easyMatrix* const a,struct easyMatrix* c) 
     return c;
 }
 
-struct easyMatrix* leftMatrix(uint8 x_i,uint8 y_i, struct easyMatrix* const in, struct easyMatrix* out) {
+struct easyMatrix* leftMatrix(uint8 x_i,uint8 y_i, struct easyMatrix* const in, 
+                              struct easyMatrix* out) {
     if(in->rows != in->cols) return NULL;
     if(out->rows != out->cols) return NULL;
     if(in->rows != (out->rows+1)) return NULL;
@@ -69,7 +72,8 @@ struct easyMatrix* leftMatrix(uint8 x_i,uint8 y_i, struct easyMatrix* const in, 
     }
     return out;
 }
-struct easyMatrix* adjMatrix(struct easyMatrix* const in, struct easyMatrix* out) {
+struct easyMatrix* adjMatrix(struct easyMatrix* const in, 
+                             struct easyMatrix* out) {
     if(in->rows != out->cols) return NULL;
     if(in->cols != out->rows) return NULL;
     int index = 0;
@@ -88,14 +92,15 @@ struct easyMatrix* adjMatrix(struct easyMatrix* const in, struct easyMatrix* out
             sign2 = - sign2;    
             index+=y;
         }
-        
+
         sign1 = - sign1;
     }
     DELETE_DYNAMIC_MATRIX(ret);
     return out;
 }
 
-DATA_TYPE invMatrix(struct easyMatrix *const in , struct easyMatrix * out) {
+DATA_TYPE invMatrix(struct easyMatrix *const in , 
+                    struct easyMatrix * out) {
     if(in->cols!=in->rows) {
         printf("ERROR:invMatrix cols and rows not equal!\n");
         return 0;
@@ -115,14 +120,14 @@ DATA_TYPE invMatrix(struct easyMatrix *const in , struct easyMatrix * out) {
     multiMatrix(UINV,LINV,out);
     double s = 1;
     for(int i = 0;i<N;i++) 
-        s *= U->element[i*N+i];
+    s *= U->element[i*N+i];
     /*
     adjMatrix(in,out);
     DATA_TYPE scale = detMatrix(in);
     if(scale<1e-5&&scale>-1e-5) return 0.0;
     scale = 1/scale;
     scaleMatrix(scale,out,out);
-*/
+    */
     DELETE_DYNAMIC_MATRIX(L);
     DELETE_DYNAMIC_MATRIX(U);
     DELETE_DYNAMIC_MATRIX(LINV);
@@ -130,7 +135,9 @@ DATA_TYPE invMatrix(struct easyMatrix *const in , struct easyMatrix * out) {
     return isFiniteNumber(s);
 }
 
-struct easyMatrix* getLUMatrix(struct easyMatrix* const A, struct easyMatrix* L,struct easyMatrix* U) {
+struct easyMatrix* getLUMatrix(struct easyMatrix* const A, 
+                               struct easyMatrix* L,
+                               struct easyMatrix* U) {
     int row=0;
     DATA_TYPE s = 0;
     uint8 N = A->cols;
@@ -160,61 +167,10 @@ struct easyMatrix* getLUMatrix(struct easyMatrix* const A, struct easyMatrix* L,
         }
     }
     return L;
-/*
-        //交换P[i]和P[row]
-        int tmp=P[i];
-        P[i]=P[row];
-        P[row]=tmp;
-
-        double tmp2=0.0d;
-        for(int j=0;j<N;j++)
-        {
-            //交换A[i][j]和 A[row][j]
-            tmp2=A[i*N+j];
-            A[i*N+j]=A[row*N+j];
-            A[row*N+j]=tmp2;
-        }
-
-        //以下同LU分解
-        double u=A[i*N+i],l=0.0d;
-        for(int j=i+1;j<N;j++)
-        {
-            l=A[j*N+i]/u;
-            A[j*N+i]=l;
-            for(int k=i+1;k<N;k++)
-            {
-                A[j*N+k]=A[j*N+k]-A[i*N+k]*l;
-            }
-        }
-
-    }
-
-      //构造L和U
-      for(int i=0;i<N;i++)
-      {
-          for(int j=0;j<=i;j++)
-          {
-              if(i!=j)
-              {
-                  L[i*N+j]=A[i*N+j];
-              }
-              else
-              {
-                  L[i*N+j]=1;
-              }
-          }
-          for(int k=i;k<N;k++)
-          {
-              U[i*N+k]=A[i*N+k];
-          }
-      }
-
  }
- return eye;
- */
-}
 
-struct easyMatrix* invLMatrix(struct easyMatrix* const L, struct easyMatrix* L_inv) { 
+struct easyMatrix* invLMatrix(struct easyMatrix* const L, 
+                              struct easyMatrix* L_inv) { 
     uint8 N = L->cols;
     if(N!=L->rows) {
         printf("L matrix is not a sqare matrix!\n");
@@ -239,14 +195,15 @@ struct easyMatrix* invLMatrix(struct easyMatrix* const L, struct easyMatrix* L_i
     }
     return L_inv;
 }
-struct easyMatrix* invUMatrix(struct easyMatrix* const U, struct easyMatrix* U_inv) { 
+struct easyMatrix* invUMatrix(struct easyMatrix* const U, 
+                              struct easyMatrix* U_inv) { 
     uint8 N = U->cols;
     DATA_TYPE s;
     int t = N*N;
     for(int i =0;i<t;i++) {
         U_inv->element[i] = 1e-13;
     }
- for (uint8 i = 0;i < N;i++)                    //按列序，列内按照从下到上，计算u的逆矩阵
+    for (uint8 i = 0;i < N;i++)                    //按列序，列内按照从下到上，计算u的逆矩阵
     {
         U_inv->element[i*N+i] = 1 / U->element[i*N+i];
     }
@@ -275,7 +232,7 @@ DATA_TYPE fastDetMatrix(struct easyMatrix* const in) {
     getLUMatrix(in,L,U);
     double s = 1;
     for(int i = 0;i<N;i++) 
-        s *= U->element[i*N+i];
+    s *= U->element[i*N+i];
     DELETE_DYNAMIC_MATRIX(L);
     DELETE_DYNAMIC_MATRIX(U);
     return s;
@@ -319,7 +276,9 @@ struct easyMatrix* addMatrix(const struct easyMatrix* const a,const struct easyM
     return c;
 }
 
-struct easyMatrix* subMatrix(struct easyMatrix* const a, struct easyMatrix* const b, struct easyMatrix* c) {
+struct easyMatrix* subMatrix(struct easyMatrix* const a, 
+                             struct easyMatrix* const b,
+                             struct easyMatrix* c) {
     if(a->cols != b->cols) return NULL;
     if(a->rows != b->rows) return NULL;
     struct easyMatrix* obj = (struct easyMatrix*)a;
@@ -338,7 +297,9 @@ struct easyMatrix* scaleMatrix(DATA_TYPE scale, struct easyMatrix* const a, stru
     return b;
 }
 
-struct easyMatrix* multiMatrix(struct easyMatrix* const a,struct easyMatrix* const b, struct easyMatrix* c) {
+struct easyMatrix* multiMatrix(struct easyMatrix* const a,
+                               struct easyMatrix* const b, 
+                               struct easyMatrix* c) {
     if(NULL==c) return NULL;
     if(c == a || c == b) return NULL;
     if(a->cols != b->rows) return NULL;
@@ -383,7 +344,9 @@ struct easyMatrix* eyesMatrix(struct easyMatrix* e) {
     return e;
 }
 
-struct easyMatrix* solveEquationMatrix(const struct easyMatrix* const A,const struct easyMatrix* const Y, struct easyMatrix* X) { 
+struct easyMatrix* solveEquationMatrix(const struct easyMatrix* const A,
+                                       const struct easyMatrix* const Y, 
+                                       struct easyMatrix* X) { 
     CREATE_DYNAMIC_MATRIX_ONHEAP(A->rows,A->cols,AINV,NULL);
     invMatrix(A,AINV);
     multiMatrix(AINV,Y,X);
